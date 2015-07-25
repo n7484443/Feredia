@@ -1,0 +1,5 @@
+Sprite=32
+basicSpeed=1
+Wait:
+[26]=15
+end
