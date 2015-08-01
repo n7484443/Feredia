@@ -1,7 +1,10 @@
 package listener;
 
+import java.io.IOException;
+
 import org.lwjgl.input.Keyboard;
 
+import player.skill.mage.MagicMissile;
 import core.MainRoop;
 
 public class GameListener {
@@ -34,6 +37,31 @@ public class GameListener {
 			if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
 				MainRoop.p.moveX(-4);
 			}
+			
+			if (Keyboard.isKeyDown(Keyboard.KEY_0) && pressedtimekeyboard == 0 && MainRoop.p.mp >= 10) {
+				try {
+					MainRoop.p.skill[0] = new MagicMissile((int)MainRoop.p.getX() + 16 + 1, (int)MainRoop.p.getY() - 62);
+					MainRoop.p.setmp(MainRoop.p.mp -= 10);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				pressedtimekeyboard = 1;
+			}
+			
+			if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+				for (int i = 0; i < MainRoop.p.getMap().portal.length; i++) {
+					if (pressedtimekeyboard == 0 && (MainRoop.p.getX() + 16 > MainRoop.p.getMap().width ? MainRoop.p.getMap().portal[i].CheckCollision(MainRoop.p.getMap().width, MainRoop.p.getY())
+							: MainRoop.p.getMap().portal[i].CheckCollision(
+									MainRoop.p.getX() + 16, MainRoop.p.getY()))
+							|| (MainRoop.p.getX() - 16 < 0 ? MainRoop.p.getMap().portal[i].CheckCollision(0, MainRoop.p.getY())
+							: MainRoop.p.getMap().portal[i].CheckCollision(
+									MainRoop.p.getX() - 16, MainRoop.p.getY())) || MainRoop.p.getMap().portal[i].CheckCollision(MainRoop.p.getX(), MainRoop.p.getY())) {
+						MainRoop.p.getMap().portal[i].PlayerMoveMap();
+						pressedtimekeyboard = 1;
+						break;
+					}
+				}
+			}
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 				boolean b1 = false;
@@ -49,19 +77,6 @@ public class GameListener {
 						MainRoop.p.npc = MainRoop.p.getMap().npc[i];
 						b1 = true;
 						pressedtimekeyboard = 4;
-						break;
-					}
-				}
-				for (int i = 0; i < MainRoop.p.getMap().portal.length; i++) {
-					if (pressedtimekeyboard == 0 && (MainRoop.p.getX() + 16 > MainRoop.p.getMap().width ? MainRoop.p.getMap().portal[i].CheckCollision(MainRoop.p.getMap().width, MainRoop.p.getY())
-							: MainRoop.p.getMap().portal[i].CheckCollision(
-									MainRoop.p.getX() + 16, MainRoop.p.getY()))
-							|| (MainRoop.p.getX() - 16 < 0 ? MainRoop.p.getMap().portal[i].CheckCollision(0, MainRoop.p.getY())
-							: MainRoop.p.getMap().portal[i].CheckCollision(
-									MainRoop.p.getX() - 16, MainRoop.p.getY())) || MainRoop.p.getMap().portal[i].CheckCollision(MainRoop.p.getX(), MainRoop.p.getY())) {
-						MainRoop.p.getMap().portal[i].PlayerMoveMap();
-						b1 = true;
-						pressedtimekeyboard = 1;
 						break;
 					}
 				}

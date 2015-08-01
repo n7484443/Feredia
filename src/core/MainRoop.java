@@ -13,7 +13,8 @@ import org.newdawn.slick.opengl.Texture;
 import player.Items;
 import player.PlayerInfo;
 import player.Slot;
-import player.skill.Skills_Mage;
+import player.skill.SkillImageLoader;
+import player.skill.mage.Skills_Mage;
 import render.RenderMain;
 import render.font.FontRenderer;
 
@@ -45,11 +46,13 @@ public class MainRoop {
 		setDisplayAndGL(width, height);
 		FontRenderer.Init();
 		MapImageLoader.Init();
+		SkillImageLoader.Init();
 		Maps.Init();
 		Items.Init();
 		Skills_Mage.Init();
-		p = new PlayerInfo(1, 100, 1, 0, 10, 730, "플레이어", "초보자");
+		p = new PlayerInfo(1, 100, 100, 0, 10, 730, "플레이어", "초보자");
 		p.sethp(100);
+		p.setmp(100);
 		p.setMap(Maps.tutorial_0);
 		Slot.Init();
 		GameListener.Init();

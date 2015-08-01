@@ -9,15 +9,12 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
-
-import player.skill.Skills_Mage;
 import render.font.FontRenderer;
 import core.MainRoop;
 
 public class RenderMain extends Thread {
 	public static List<RenderUnit> list = new LinkedList<RenderUnit>();
 	public static Iterator<RenderUnit> iterator;
-
 	@Override
 	public synchronized void start() {
 		try {
@@ -47,9 +44,6 @@ public class RenderMain extends Thread {
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
 		
 		RenderMap.update();
-		
-		int h = MainRoop.p.h;
-		int w = MainRoop.p.w;
 
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
@@ -65,12 +59,7 @@ public class RenderMain extends Thread {
 		GL11.glVertex2f(0, 960 - 64);
 		GL11.glEnd();
 
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glVertex2d(MainRoop.p.getX() - w, MainRoop.p.getY() - h);
-		GL11.glVertex2d(MainRoop.p.getX() - w, MainRoop.p.getY() + h);
-		GL11.glVertex2d(MainRoop.p.getX() + w, MainRoop.p.getY() + h);
-		GL11.glVertex2d(MainRoop.p.getX() + w, MainRoop.p.getY() - h);
-		GL11.glEnd();
+		RenderPlayer();
 
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -102,8 +91,8 @@ public class RenderMain extends Thread {
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glVertex2f(226, 960 - 8);
 		GL11.glVertex2f(226, 960 - 26);
-		GL11.glVertex2f(226 + MainRoop.p.hp * 298 / MainRoop.p.maxhp, 960 - 26);
-		GL11.glVertex2f(226 + MainRoop.p.hp * 298 / MainRoop.p.maxhp, 960 - 8);
+		GL11.glVertex2f(226 + MainRoop.p.mp * 298 / MainRoop.p.maxmp, 960 - 26);
+		GL11.glVertex2f(226 + MainRoop.p.mp * 298 / MainRoop.p.maxmp, 960 - 8);
 		GL11.glEnd();
 
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
@@ -128,9 +117,28 @@ public class RenderMain extends Thread {
 			RenderUnit RU = iterator.next();
 			RU.firstdraw();
 		}
-
-		Skills_Mage.MagicMissile.RenderImage(0, 0);
+		SkillRender();
+		
 		
 		Display.update();
+	}
+	
+	public void RenderPlayer() {
+		int h = MainRoop.p.h;
+		int w = MainRoop.p.w;
+		GL11.glBegin(GL11.GL_QUADS);
+		GL11.glVertex2d(MainRoop.p.getX() - w, MainRoop.p.getY() - h);
+		GL11.glVertex2d(MainRoop.p.getX() - w, MainRoop.p.getY() + h);
+		GL11.glVertex2d(MainRoop.p.getX() + w, MainRoop.p.getY() + h);
+		GL11.glVertex2d(MainRoop.p.getX() + w, MainRoop.p.getY() - h);
+		GL11.glEnd();
+	}
+
+	public void SkillRender(){
+		for(int i = 0; i < MainRoop.p.skill.length; i++){
+			if(MainRoop.p.skill[i] != null){
+				MainRoop.p.skill[i].render();
+			}
+		}
 	}
 }

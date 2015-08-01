@@ -1,5 +1,6 @@
 package player;
 
+import player.skill.Skill;
 import npc.NpcBase;
 import collision.CollisionBox;
 import core.MainRoop;
@@ -35,6 +36,8 @@ public class PlayerInfo {
 	public boolean moveable;
 
 	public NpcBase npc;
+	
+	public Skill[] skill;
 
 	public PlayerInfo(int level, int hp, int mp, int exp, int x, int y,
 			String name, String job) {
@@ -50,6 +53,7 @@ public class PlayerInfo {
 		this.isAir = false;
 		this.moveable = true;
 		npc = null;
+		skill = new Skill[20];
 	}
 
 	public void jump() {

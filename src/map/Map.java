@@ -7,6 +7,7 @@ import npc.NpcBase;
 
 import org.newdawn.slick.opengl.Texture;
 
+import core.MainRoop;
 import portal.Portal;
 import render.RenderMain;
 import render.RenderUnit;
@@ -44,7 +45,11 @@ public class Map {
 		return MapImageLoader.blockTexture[mapblock[i][j]-1];
 	}
 	
-	public void Inter(){}
+	public void Inter(){
+		for(int i = 0; i < MainRoop.p.skill.length; i++){
+			MainRoop.p.skill[i] = null;
+		}
+	}
 	public void Outer(){
 		Iterator<RenderUnit> i = RenderMain.list.iterator();
 		while(i.hasNext()){

@@ -6,23 +6,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
+import org.newdawn.slick.opengl.Texture;
 
 import collision.CollisionBox;
-import render.RenderUnit;
-
-public class Skill extends RenderUnit {
+public class Skill{
 	public String url;
 	public int Sprite;
 	public int[] SpriteWait;
 	public int show;
 	public int wait;
+	public int x;
+	public int y;
+	public Texture texture;
+	public boolean destroyon;
 	
-	public CollisionBox collision;
+	public CollisionBox[] collision;
 
-	public Skill(String url) throws IOException {
-		super(0, 0, url + ".png");
+	public SkillImageNumber Init(String url, int j, int Sprite, int[] SpriteWait, Texture texture) throws IOException{
 		this.url = url;
 		show = 0;
 		BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -39,7 +39,6 @@ public class Skill extends RenderUnit {
 			} else if (str.contains("Wait:")) {
 				while (!str.contains("end")) {
 					str = br.readLine();
-					System.out.println(str);
 					if (!str.contains("end") && str.substring(str.indexOf("[") + 1, str.indexOf("]")) != "end") {
 						SpriteWait[Integer.valueOf(str.substring(
 								str.indexOf("[") + 1, str.indexOf("]")))] = Integer
@@ -49,26 +48,37 @@ public class Skill extends RenderUnit {
 			}
 		}
 		br.close();
-		try {
-			texture = TextureLoader.getTexture("png", ResourceLoader
-					.getResourceAsStream(url + ".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		texture = SkillImageLoader.SkillTexture[j];
+		return new SkillImageNumber(Sprite, SpriteWait);
+	}
+
+	public Skill(int x, int y, Texture texture, int Sprite, int[] SpriteWait) throws IOException {
+		this.Sprite = Sprite;
+		this.SpriteWait = SpriteWait;
+		this.texture = texture;
+		this.x = x;
+		this.y = y;
+		this.destroyon = false;
+		RenderImage(x, y, texture, Sprite);
 	}
 	
-	public void addCollisionBox(int x, int y, int width, int height){
-		this.collision = new CollisionBox(x, y, width, height);
+	public Skill(){}
+	
+	public void addCollisionBox(int i, int x, int y, int width, int height){
+		this.collision[i] = new CollisionBox(x, y, width, height);
 	}
 	
 	public boolean CheckCollision(double x, double y){
-		if(collision != null){
-			return collision.CheckCollisioned(x - this.x, y - this.y);
+		boolean b = false;
+		for(int i = 0; i < this.collision.length; i++){
+			if(collision[i] != null){
+				if(collision[i].CheckCollisioned(x - this.x, y - this.y))b=true;
+			}
 		}
-		return false;
+		return b;
 	}
 
-	public void RenderImage(int x, int y) {
+	public void RenderImage(int x, int y, Texture texture, int Sprite) {
 		texture.bind();
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -83,7 +93,9 @@ public class Skill extends RenderUnit {
 		GL11.glTexCoord2f((show + 1) * (texture.getWidth() / Sprite), 0);
 		GL11.glVertex2f(x + texture.getImageWidth()/Sprite, y);
 		GL11.glEnd();
-		update();
+	}
+	
+	public void RenderImageSecond(int x, int y, int Sprite){
 	}
 	
 	public void update(){
@@ -92,8 +104,23 @@ public class Skill extends RenderUnit {
 			wait = 0;
 			show ++;
 			if(show >= Sprite){
-				show = 0;
+				this.destroy();
 			}
 		}
+		this.updateShow(show);
+	}
+	
+	public void updateShow(int show){
+		
+	}
+	
+	public void render(){
+		RenderImage(this.x, this.y, this.texture, this.Sprite);
+		RenderImageSecond(this.x, this.y, this.Sprite);
+		
+	}
+	
+	public void destroy(){
+		destroyon = true;
 	}
 }

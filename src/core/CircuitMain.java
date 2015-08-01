@@ -10,6 +10,25 @@ public class CircuitMain extends Thread {
 	}
 
 	public synchronized void update() {
+		jumpPlayer();
+		SkillUpdate();
+	}
+
+	public void SkillUpdate(){
+		for(int i = 0; i < MainRoop.p.skill.length; i++){
+			if(MainRoop.p.skill[i] != null){
+				if(MainRoop.p.skill[i].destroyon){
+					MainRoop.p.skill[i] = null;
+					continue;
+				}
+				MainRoop.p.skill[i].update();
+			}
+			
+				
+		}
+	}
+	
+	public void jumpPlayer(){
 		if (MainRoop.p.getMap() != null) {
 			MainRoop.p.checkCollisionBlock(MainRoop.p.getX(), MainRoop.p.getY()
 					+ 16 + MainRoop.p.Vy);
@@ -42,7 +61,7 @@ public class CircuitMain extends Thread {
 			}
 		}
 	}
-
+	
 	public void movePlayer(double x) {
 		if (MainRoop.p.checkCollisionBlock(MainRoop.p.getX() + x
 				+ (x < 0 ? -MainRoop.p.w - 1 : MainRoop.p.w + 1),
