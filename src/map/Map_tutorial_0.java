@@ -1,11 +1,8 @@
 package map;
 
 import java.io.IOException;
-
 import npc.DialogueNpc;
 import npc.NpcBase;
-
-import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -31,7 +28,7 @@ public class Map_tutorial_0 extends Map{
 				mapblock[i][j] = 0;
 			}
 		}
-		for(int i = 0; i < width/32; i++){
+		for(int i = 0; i < width/32; i+=2){
 			mapblock[i][29] = 1;
 			mapblock[i][28] = 1;
 			mapblock[i][27] = 1;
@@ -50,7 +47,7 @@ public class Map_tutorial_0 extends Map{
 		Collision[0] = new CollisionBox(-16, this.height - 6*32, this.width, 6*32);
 		Collision[1] = new CollisionBox(38*32-16, this.height - 7*32, this.width-37*32+16, 32);
 		
-		npc[0] = new NpcBase(0, height-32*7, 32, 32, new DialogueNpc("안녕하세요.", "제가 지금부터 조작 방법을 알려드릴게요."), new DialogueNpc("일단,"));
+		npc[0] = new NpcBase(0, height-32*7, 32, 32, new DialogueNpc("안녕하세요.", "제가 지금부터 조작 방법을 알려드릴게요."), new DialogueNpc("일단 점프 키는 ''"));
 		portal[0] = new Portal(200, height-32*7, 16, height-32*7+16, Maps.tutorial_1);
 	}
 	
@@ -63,9 +60,5 @@ public class Map_tutorial_0 extends Map{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public Texture getMapTexture(int i, int j){
-		return MapImageLoader.blockTexture[mapblock[i][j]-1];
 	}
 }

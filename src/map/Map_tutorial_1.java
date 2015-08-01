@@ -1,8 +1,6 @@
 package map;
 
 import java.io.IOException;
-
-import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -23,7 +21,7 @@ public class Map_tutorial_1 extends Map{
 				mapblock[i][j] = 0;
 			}
 		}
-		for(int i = 0; i < width/32; i++){
+		for(int i = 0; i < width/32; i+=2){
 			mapblock[i][29] = 1;
 			mapblock[i][28] = 1;
 			mapblock[i][27] = 1;
@@ -41,8 +39,4 @@ public class Map_tutorial_1 extends Map{
 	}
 
 	public void Inter(){}
-	
-	public Texture getMapTexture(int i, int j){
-		return MapImageLoader.blockTexture[mapblock[i][j]-1];
-	}
 }

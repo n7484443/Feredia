@@ -55,10 +55,31 @@ public class FontRenderer {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		Color.white.bind();
+		boolean b = false;
+		boolean isfirst = false;
 		for(int i = 0; i < str.length(); i++){
-			int fontx = x.get((int)str.charAt(i));
-			int fonty = y.get((int)str.charAt(i));
-			int fontwidth = width.get((int)str.charAt(i));
+			if((int)str.charAt(i) == 39){
+				b = true;
+				isfirst = !isfirst;
+			}
+			int fontx;
+			int fonty;
+			int fontwidth;
+			if(b){
+				if(isfirst){
+					fontx = x.get(8216);
+					fonty = y.get(8216);
+					fontwidth = width.get(8216);
+				}else{
+					fontx = x.get(8217);
+					fonty = y.get(8217);
+					fontwidth = width.get(8217);
+				}
+			}else{
+				fontx = x.get((int)str.charAt(i));
+				fonty = y.get((int)str.charAt(i));
+				fontwidth = width.get((int)str.charAt(i));
+			}
 			float texx1 = fontx/2048F;
 			float texx2 = (fontx+fontwidth)/2048F;
 			float texy1 = fonty/2048F;
@@ -75,6 +96,9 @@ public class FontRenderer {
 	 			GL11.glVertex2f(x1+fontwidth, y1);
 			GL11.glEnd();
 			x1 += fontwidth;
+			if(b){
+				b= false;
+			}
 		}
 		GL11.glDisable(GL11.GL_BLEND);
 	}

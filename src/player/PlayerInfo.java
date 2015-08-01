@@ -54,7 +54,7 @@ public class PlayerInfo {
 
 	public void jump() {
 		if (checkCollisionUnderBlock()) {
-			Vy = -18;
+			Vy = -15;
 			isAir = true;
 		}
 	}

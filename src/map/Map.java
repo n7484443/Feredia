@@ -36,8 +36,12 @@ public class Map {
 		
 	}
 	
+	public int getMapTextureXSize(int i, int j){
+		return MapImageLoader.blockTexturexSize[mapblock[i][j]-1];
+	}
+	
 	public Texture getMapTexture(int i, int j){
-		return null;
+		return MapImageLoader.blockTexture[mapblock[i][j]-1];
 	}
 	
 	public void Inter(){}
