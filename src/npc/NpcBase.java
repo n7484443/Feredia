@@ -1,5 +1,8 @@
 package npc;
 
+import org.newdawn.slick.opengl.Texture;
+
+import image.loader.NpcImageLoader;
 import collision.CollisionBox;
 
 public class NpcBase {
@@ -15,7 +18,9 @@ public class NpcBase {
 	
 	public CollisionBox collision;
 	
-	public NpcBase(int x, int y, int width, int height, StringNpc... npcTalk){
+	public int texture;
+	
+	public NpcBase(int x, int y, int width, int height, int texture, StringNpc... npcTalk){
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -23,6 +28,7 @@ public class NpcBase {
 		this.npcTalk = npcTalk;
 		this.showedNpcTalk = 0;
 		this.showedNpcTalkMax = npcTalk.length;
+		this.texture = texture;
 		this.collision = new CollisionBox(x, y, width, height);
 	}
 	
@@ -33,5 +39,9 @@ public class NpcBase {
 			return collision.CheckCollisioned(x, y);
 		}
 		return false;
+	}
+	
+	public Texture getTexture(){
+		return NpcImageLoader.NpcTexture[texture];
 	}
 }

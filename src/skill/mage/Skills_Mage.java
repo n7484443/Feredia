@@ -1,4 +1,4 @@
-package player.skill.mage;
+package skill.mage;
 
 import java.io.IOException;
 

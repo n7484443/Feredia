@@ -1,4 +1,4 @@
-package player.skill;
+package skill;
 
 public class SkillImageNumber {
 	int number;

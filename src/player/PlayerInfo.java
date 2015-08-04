@@ -1,6 +1,6 @@
 package player;
 
-import player.skill.Skill;
+import skill.Skill;
 import npc.NpcBase;
 import collision.CollisionBox;
 import core.MainRoop;
@@ -127,7 +127,9 @@ public class PlayerInfo {
 	}
 
 	public void setMap(Map m) {
-		if(this.m != null)this.m.Outer();
+		if(this.m != null){
+			this.m.Outer();
+		}
 		m.Inter();
 		this.m = m;
 	}

@@ -1,5 +1,7 @@
 package map;
 
+import image.loader.MapImageLoader;
+
 import java.io.IOException;
 import java.util.Iterator;
 

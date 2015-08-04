@@ -1,4 +1,4 @@
-package player.skill;
+package image.loader;
 
 import java.io.IOException;
 

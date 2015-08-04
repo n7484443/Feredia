@@ -8,7 +8,7 @@ import player.Items;
 import player.Slot;
 import render.font.FontRenderer;
 
-public class RenderSlot implements Renderer{
+public class RenderSlot{
 	public int Id = 0;
 	
 	public static Slot[] s;
@@ -33,7 +33,7 @@ public class RenderSlot implements Renderer{
 				GL11.glDisable(GL11.GL_BLEND);
 				GL11.glColor4f(1.f, 1.f, 1.f, 0.3f);
 				if(s[i + j*4] != null){
-					s[i + j*4].itemStack.i.image.bind();
+					s[i + j*4].itemStack.i.getImage().bind();
 					GL11.glBegin(GL11.GL_QUADS);
 					GL11.glEnable(GL11.GL_BLEND);
 					GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ZERO);

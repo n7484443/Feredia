@@ -1,7 +1,7 @@
 package core;
 
+import image.loader.MainImageLoader;
 import listener.GameListener;
-import map.MapImageLoader;
 import map.Maps;
 
 import org.lwjgl.LWJGLException;
@@ -13,10 +13,9 @@ import org.newdawn.slick.opengl.Texture;
 import player.Items;
 import player.PlayerInfo;
 import player.Slot;
-import player.skill.SkillImageLoader;
-import player.skill.mage.Skills_Mage;
 import render.RenderMain;
 import render.font.FontRenderer;
+import skill.mage.Skills_Mage;
 
 public class MainRoop {
 	
@@ -45,8 +44,7 @@ public class MainRoop {
 			throws Exception {
 		setDisplayAndGL(width, height);
 		FontRenderer.Init();
-		MapImageLoader.Init();
-		SkillImageLoader.Init();
+		MainImageLoader.Init();
 		Maps.Init();
 		Items.Init();
 		Skills_Mage.Init();

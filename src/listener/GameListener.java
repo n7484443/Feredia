@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
-import player.skill.mage.MagicMissile;
+import skill.mage.MagicMissile;
 import core.MainRoop;
 
 public class GameListener {
@@ -62,25 +62,25 @@ public class GameListener {
 					}
 				}
 			}
-
-			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-				boolean b1 = false;
+			if (Keyboard.isKeyDown(Keyboard.KEY_Q) && pressedtimekeyboard == 0){
 				if(MainRoop.p.getMap().npc != null)
-				for (int i = 0; i < MainRoop.p.getMap().npc.length; i++) {
-					if (pressedtimekeyboard == 0 && (MainRoop.p.getX() + 16 > MainRoop.p.getMap().width ? MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.getMap().width, MainRoop.p.getY())
-							: MainRoop.p.getMap().npc[i].CheckCollision(
-									MainRoop.p.getX() + 16, MainRoop.p.getY()))
-							|| (MainRoop.p.getX() - 16 < 0 ? MainRoop.p.getMap().npc[i].CheckCollision(0, MainRoop.p.getY())
-							: MainRoop.p.getMap().npc[i].CheckCollision(
-									MainRoop.p.getX() - 16, MainRoop.p.getY())) || MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.getX(), MainRoop.p.getY())) {
-						MainRoop.p.moveable = false;
-						MainRoop.p.npc = MainRoop.p.getMap().npc[i];
-						b1 = true;
-						pressedtimekeyboard = 4;
-						break;
+					for (int i = 0; i < MainRoop.p.getMap().npc.length; i++) {
+						if ((MainRoop.p.getX() + 16 > MainRoop.p.getMap().width ? MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.getMap().width, MainRoop.p.getY())
+								: MainRoop.p.getMap().npc[i].CheckCollision(
+										MainRoop.p.getX() + 16, MainRoop.p.getY()))
+								|| (MainRoop.p.getX() - 16 < 0 ? MainRoop.p.getMap().npc[i].CheckCollision(0, MainRoop.p.getY())
+								: MainRoop.p.getMap().npc[i].CheckCollision(
+										MainRoop.p.getX() - 16, MainRoop.p.getY())) || MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.getX(), MainRoop.p.getY())) {
+							MainRoop.p.moveable = false;
+							MainRoop.p.npc = MainRoop.p.getMap().npc[i];
+							pressedtimekeyboard = 4;
+							break;
+						}
 					}
-				}
-				if (!b1 && pressedtimekeyboard == 0) {
+			}
+
+			if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {				
+				if (pressedtimekeyboard == 0) {
 					MainRoop.p.jump();
 				}
 			}

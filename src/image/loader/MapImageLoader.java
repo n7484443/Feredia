@@ -1,4 +1,4 @@
-package map;
+package image.loader;
 
 import java.io.IOException;
 

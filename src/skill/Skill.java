@@ -1,4 +1,6 @@
-package player.skill;
+package skill;
+
+import image.loader.SkillImageLoader;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
