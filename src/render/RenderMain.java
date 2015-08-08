@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import listener.GameListener;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -30,6 +29,7 @@ public class RenderMain extends Thread {
 		MainRoop.bar = TextureLoader.getTexture("png",
 				ResourceLoader.getResourceAsStream("image/gui/bar.png"));
 		RenderSlot.Init();
+		RenderSkill.Init();
 		RenderMap.Init();
 	}
 
@@ -46,7 +46,7 @@ public class RenderMain extends Thread {
 		RenderMap.update();
 
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
+		GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.6f);
 		MainRoop.bar.bind();
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glTexCoord2f(0, 0);
@@ -102,14 +102,19 @@ public class RenderMain extends Thread {
 		FontRenderer.render(10, 960 - 30, "Level " + MainRoop.p.level);
 		FontRenderer.render(130, 960 - 60, MainRoop.p.job);
 
+		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
 		if (!MainRoop.p.moveable && MainRoop.p.npc != null) {
 			for (int i = 0; i < MainRoop.p.npc.npcTalk[MainRoop.p.npc.showedNpcTalk].Dialogue.length; i++) {
 				FontRenderer.render(110,360 + i * 30, MainRoop.p.npc.npcTalk[MainRoop.p.npc.showedNpcTalk].Dialogue[i]);
 			}
 		}
 
-		if (GameListener.b) {
+		if (RenderDataBase.IsItemSlotOpened) {
 			new RenderSlot().render();
+		}
+		
+		if (RenderDataBase.IsSkillSlotOpened) {
+			new RenderSkill().render();
 		}
 
 		iterator = list.iterator();
@@ -126,6 +131,7 @@ public class RenderMain extends Thread {
 	public void RenderPlayer() {
 		int h = MainRoop.p.h;
 		int w = MainRoop.p.w;
+		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
 		GL11.glBegin(GL11.GL_QUADS);
 		GL11.glVertex2d(MainRoop.p.getX() - w, MainRoop.p.getY() - h);
 		GL11.glVertex2d(MainRoop.p.getX() - w, MainRoop.p.getY() + h);

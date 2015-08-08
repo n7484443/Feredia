@@ -16,7 +16,7 @@ public class Slot {
 	public static Texture texture;
 	
 	public static void Init() throws IOException{
-		texture = TextureLoader.getTexture(".png", ResourceLoader.getResourceAsStream("image/gui/slot.png"));
+		texture = TextureLoader.getTexture(".png", ResourceLoader.getResourceAsStream("image/gui/item_slot.png"));
 	}
 	
 	public static Texture getTexture(){

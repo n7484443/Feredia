@@ -31,8 +31,6 @@ public class Map_tutorial_1 extends Map{
 			mapblock[i][27] = 1;
 			mapblock[i][26] = 1;
 			mapblock[i][25] = 1;
-		}
-		for(int i = 0; i < width/32; i++){
 			mapblock[i][24] = 7;
 		}
 		

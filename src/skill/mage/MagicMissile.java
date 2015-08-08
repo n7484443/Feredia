@@ -59,9 +59,9 @@ public class MagicMissile extends Skill {
 				
 			} else if (show == 26) {
 				for (int i = 0; i < projectile.length; i++) {
-					projectile[i].moveX(10);
-					projectile[i].moveCollisionBoxX(10);
-					projectile[i].effects[0].moveEffect(10, 0);
+					projectile[i].moveX(15);
+					projectile[i].moveCollisionBoxX(15);
+					projectile[i].effects[0].moveEffect(15, 0);
 					if(j != 5){
 						projectile[i].effects[0].addNumber(1);
 					}

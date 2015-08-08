@@ -25,7 +25,7 @@ public class MapImageLoader {
 		blockTexturexSize[3] = 32;
 		blockTexturexSize[4] = 32;
 		blockTexturexSize[5] = 32;
-		blockTexturexSize[6] = 32;
+		blockTexturexSize[6] = 64;
 		
 	}
 }

@@ -1,5 +1,7 @@
 package core;
 
+import render.RenderDataBase;
+
 public class CircuitMain extends Thread {
 	@Override
 	public synchronized void start() {
@@ -7,6 +9,7 @@ public class CircuitMain extends Thread {
 	}
 
 	private synchronized void init() {
+		RenderDataBase.Init();
 	}
 
 	public synchronized void update() {

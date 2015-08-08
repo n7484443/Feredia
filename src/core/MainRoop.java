@@ -98,12 +98,12 @@ public class MainRoop {
 				}
 			}
 			roop++;
-			if (roop % 20 == 0)
-				System.out.println((50 - (after - before)) * 20);
+			//if (roop % 20 == 0)
+				//System.out.println((50 - (after - before)) * 20);
 		}
 	}
 
 	private static void Check() {
-		GameListener.CheckKeyboardPressed();
+		GameListener.Check();
 	}
 }
