@@ -1,5 +1,7 @@
 package listener;
 
+import java.io.IOException;
+
 public class Key {
 	public int key;
 	public boolean state;
@@ -14,7 +16,11 @@ public class Key {
 	}
 	
 	public void setReleased(){
-		RealeasedEvent();
+		try {
+			RealeasedEvent();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean getState(){
@@ -26,7 +32,7 @@ public class Key {
 		GameListener.PressedEvent(key);
 	}
 	
-	public void RealeasedEvent(){
+	public void RealeasedEvent() throws IOException{
 		state = false;
 		GameListener.RealeasedEvent(key);
 	}

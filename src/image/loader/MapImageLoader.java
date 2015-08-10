@@ -18,6 +18,7 @@ public class MapImageLoader {
 		blockTexture[4] = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/map/glass_left.png"));
 		blockTexture[5] = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/map/glass_right.png"));
 		blockTexture[6] = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/map/glass.png"));
+		blockTexture[7] = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/map/glass_angle.png"));
 		
 		blockTexturexSize[0] = 64;
 		blockTexturexSize[1] = 32;
@@ -26,6 +27,7 @@ public class MapImageLoader {
 		blockTexturexSize[4] = 32;
 		blockTexturexSize[5] = 32;
 		blockTexturexSize[6] = 64;
+		blockTexturexSize[7] = 32;
 		
 	}
 }

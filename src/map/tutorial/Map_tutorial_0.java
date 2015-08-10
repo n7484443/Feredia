@@ -52,7 +52,7 @@ public class Map_tutorial_0 extends Map{
 		Collision[1] = new CollisionBox(38*32-16, this.height - 7*32, this.width-37*32+16, 32);
 		
 		npc[0] = new NpcBase(0, height-32*7-20, 29, 53, 0,new DialogueNpc("안녕하세요.", "제가 지금부터 조작 방법을 알려드릴게요.", "우선 'q'키를 눌러보세요."), new DialogueNpc("잘 하셨어요!", "대화는 이제 잘 아시겠죠?"),new DialogueNpc("점프는 '스페이스 바'로 하고요,","이동은 'a', 'd'키로 합니다."), new DialogueNpc("그리고 포탈을 들어가는 키는 'w'입니다."));
-		portal[0] = new Portal(200, height-32*7, 16, height-32*7+16, Maps.tutorial_1);
+		portal[0] = new Portal(32*39, height-32*8, 16, height-32*7+16, Maps.tutorial_1);
 	}
 	
 

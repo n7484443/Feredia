@@ -1,15 +1,16 @@
 package render;
 
 import java.io.IOException;
+
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-import collision.CollisionBox;
 import skill.SkillSlot;
+import collision.CollisionBox;
 
-public class RenderSkill {	
+public class RenderSkill_Mage_MakingMagic {
 	public static SkillSlot[] s;
 	public static int x;
 	public static int y;
@@ -26,7 +27,7 @@ public class RenderSkill {
 	public static CollisionBox DeleteCollisionBox;
 	
 	public void render() {
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.6f);
+		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.f);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -35,15 +36,12 @@ public class RenderSkill {
 		GL11.glTexCoord2f(0, 0);
 		GL11.glVertex2f(x, y);
 		GL11.glTexCoord2f(gui.getWidth(), 0);
-		GL11.glVertex2f(x+256, y);
+		GL11.glVertex2f(x+432, y);
 		GL11.glTexCoord2f(gui.getWidth(), gui.getHeight());
-		GL11.glVertex2f(x+256, y+512);
+		GL11.glVertex2f(x+432, y+432);
 		GL11.glTexCoord2f(0, gui.getHeight());
-		GL11.glVertex2f(x, y+512);
+		GL11.glVertex2f(x, y+432);
 		GL11.glEnd();
-		for(int i = 0; i < 4; i++){
-			
-		}
 		
 		GL11.glDisable(GL11.GL_BLEND);
 	}
@@ -75,9 +73,8 @@ public class RenderSkill {
 	public static void Init() throws IOException{
 		x = 0;
 		y = 0;
-		s = new SkillSlot[5];
-		gui = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/gui/skill_gui.png"));
-		DragCollisionBox = new CollisionBox(x, y, 243, 11);
-		DeleteCollisionBox = new CollisionBox(x + 244, y, 12, 12);
+		gui = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/gui/skillmagemaking.png"));
+		DragCollisionBox = new CollisionBox(x, y, 434, 14);
+		DeleteCollisionBox = new CollisionBox(x + 434, y, 12, 12);
 	}
 }

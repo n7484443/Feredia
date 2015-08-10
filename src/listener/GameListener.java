@@ -1,5 +1,6 @@
 package listener;
 
+import java.io.IOException;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -7,10 +8,16 @@ import org.lwjgl.opengl.Display;
 
 import render.RenderDataBase;
 import render.RenderSkill;
+import render.RenderSkill_Mage_MakingMagic;
 import skill.mage.MagicMissile;
 import core.MainRoop;
 
 public class GameListener {
+	
+	public enum Clicked {none, SkillSlot, SkillMageMakingMagicSlot}
+	
+	private static Clicked ClickedSet;
+	
 	public static int beforexmouse;
 	public static int beforeymouse;
 	public static final int DoubleWidth = 20;
@@ -21,19 +28,20 @@ public class GameListener {
 	public static Key Key_Q;
 	public static Key Key_I;
 	public static Key Key_K;
+	public static Key Key_M;
 	public static Key Key_Space;
 	public static Key Key_Z;
 	public static Key Key_X;
 	public static Key Key_C;
 	public static Key Key_V;
 	public static Key Key_B;
-	public static boolean SkillSlotClicked;
+	
+
 	public static void Init() throws LWJGLException {
 		drag = false;
 		beforexmouse = -1;
 		beforeymouse = -1;
 		time = 0;
-		SkillSlotClicked = false;
 		Mouse.create();
 		Keyboard.create();
 		Key_A = new Key(Keyboard.KEY_A);
@@ -42,79 +50,99 @@ public class GameListener {
 		Key_Q = new Key(Keyboard.KEY_Q);
 		Key_I = new Key(Keyboard.KEY_I);
 		Key_K = new Key(Keyboard.KEY_K);
+		Key_M = new Key(Keyboard.KEY_M);
 		Key_Space = new Key(Keyboard.KEY_SPACE);
 		Key_Z = new Key(Keyboard.KEY_Z);
 		Key_X = new Key(Keyboard.KEY_X);
 		Key_C = new Key(Keyboard.KEY_C);
 		Key_V = new Key(Keyboard.KEY_V);
 		Key_B = new Key(Keyboard.KEY_B);
+		//EnumSet.of(Clicked.SkillSlot)
+		ClickedSet = Clicked.none;
 	}
 
 	public static long time;
 
-	public static void Check(){
+	public static void Check() {
 		CheckDoubleClick();
 		CheckKeyboard();
 	}
-	
+
 	public static void CheckDoubleClick() {
 		while (Mouse.next()) {
 			if (Mouse.isInsideWindow()) {
-					if (Mouse.getEventButton() == 0
-							&& !Mouse.getEventButtonState()) {
-						drag = false;
-						SkillSlotClicked = false;
-						if (time == 0) {
-							time = System.currentTimeMillis();
-							beforexmouse = Mouse.getX();
-							beforeymouse = Mouse.getX();
-						} else {
-							if (Mouse.getEventButton() == 0 && !Mouse.getEventButtonState()) {
-								if (System.currentTimeMillis() - time < 200 && beforexmouse - DoubleWidth < Mouse.getX() && beforexmouse + DoubleWidth > Mouse.getX()
-										&& beforeymouse - DoubleWidth < Mouse.getY() && beforeymouse + DoubleWidth > Mouse.getY()) {
-									DoubleClickEvent(Mouse.getX(), Mouse.getY());
-								} else {
-									ClickEvent(Mouse.getX(), Mouse.getY());
-								}
-								beforexmouse = Mouse.getX();
-								beforeymouse = Mouse.getY();
-								time = 0;
-							}
-						}
-					}else if(Mouse.getEventButton() == 0 && Mouse.getEventButtonState()){
+				if (Mouse.getEventButton() == 0 && !Mouse.getEventButtonState()) {
+					drag = false;
+					ClickedSet = Clicked.none;
+					if (time == 0) {
+						time = System.currentTimeMillis();
 						beforexmouse = Mouse.getX();
-						beforeymouse = Mouse.getY();
-						drag = true;
-						RenderSkill.MoveSkillBefore();
+						beforeymouse = Mouse.getX();
+					} else {
+						if (Mouse.getEventButton() == 0
+								&& !Mouse.getEventButtonState()) {
+							if (System.currentTimeMillis() - time < 200
+									&& beforexmouse - DoubleWidth < Mouse
+											.getX()
+									&& beforexmouse + DoubleWidth > Mouse
+											.getX()
+									&& beforeymouse - DoubleWidth < Mouse
+											.getY()
+									&& beforeymouse + DoubleWidth > Mouse
+											.getY()) {
+								DoubleClickEvent(Mouse.getX(), Mouse.getY());
+							} else {
+								ClickEvent(Mouse.getX(), Mouse.getY());
+							}
+							beforexmouse = Mouse.getX();
+							beforeymouse = Mouse.getY();
+							time = 0;
+						}
 					}
+				} else if (Mouse.getEventButton() == 0
+						&& Mouse.getEventButtonState()) {
+					beforexmouse = Mouse.getX();
+					beforeymouse = Mouse.getY();
+					drag = true;
+					RenderSkill.MoveBefore();
+					RenderSkill_Mage_MakingMagic.MoveBefore();
+				}
 			}
 		}
-		if(drag){
+		if (drag) {
 			DragEvent(Mouse.getX() - beforexmouse, beforeymouse - Mouse.getY());
 		}
-		if(System.currentTimeMillis() - time >= 200 && time != 0){
+		if (System.currentTimeMillis() - time >= 200 && time != 0) {
 			ClickEvent(beforeymouse, beforeymouse);
 			beforexmouse = Mouse.getX();
 			beforeymouse = Mouse.getY();
 			time = 0;
 		}
 	}
-	
-	public static void DragEvent(int x, int y){
-		if(RenderSkill.CheckDragCollisionBox(Mouse.getX(), Display.getHeight() - Mouse.getY()) || SkillSlotClicked){
-			RenderSkill.MoveSkill(x, y);
-			SkillSlotClicked = true;
+
+	public static void DragEvent(int x, int y) {
+		if (RenderDataBase.IsSkillSlotOpened && (RenderSkill.CheckDragCollisionBox(Mouse.getX(), Display.getHeight()
+				- Mouse.getY())
+				|| ClickedSet == Clicked.SkillSlot)) {
+			RenderSkill.Move(x, y);
+			ClickedSet = Clicked.SkillSlot;
+		}else if (RenderDataBase.IsSkillMageMakingOpened && (RenderSkill_Mage_MakingMagic.CheckDragCollisionBox(Mouse.getX(), Display.getHeight()
+				- Mouse.getY())
+				|| ClickedSet == Clicked.SkillMageMakingMagicSlot)) {
+			RenderSkill_Mage_MakingMagic.Move(x, y);
+			ClickedSet = Clicked.SkillMageMakingMagicSlot;
 		}
 	}
-	
+
 	public static void ClickEvent(int x, int y) {
-		if(RenderSkill.CheckDeleteCollisionBox(Mouse.getX(), Display.getHeight() - Mouse.getY())){
+		if (RenderSkill.CheckDeleteCollisionBox(Mouse.getX(),
+				Display.getHeight() - Mouse.getY())) {
 			RenderDataBase.IsSkillSlotOpened = false;
 		}
 	}
 
 	public static void DoubleClickEvent(int x, int y) {
-		
+
 	}
 
 	public static void PressedEvent(int Key) {
@@ -139,7 +167,7 @@ public class GameListener {
 		}
 	}
 
-	public static void RealeasedEvent(int Key) {
+	public static void RealeasedEvent(int Key) throws IOException {
 		if (Key == Keyboard.KEY_Q && MainRoop.p.getMap().npc != null) {
 			if (MainRoop.p.moveable) {
 				for (int i = 0; i < MainRoop.p.getMap().npc.length; i++) {
@@ -171,18 +199,36 @@ public class GameListener {
 				}
 			}
 		}
-		if(Key == Keyboard.KEY_I){
-			if(RenderDataBase.IsItemSlotOpened){
+		if (Key == Keyboard.KEY_I) {
+			if (RenderDataBase.IsItemSlotOpened) {
 				RenderDataBase.IsItemSlotOpened = false;
 			} else {
 				RenderDataBase.IsItemSlotOpened = true;
 			}
 		}
-		if(Key == Keyboard.KEY_K){
-			if(RenderDataBase.IsSkillSlotOpened){
+		if (Key == Keyboard.KEY_K) {
+			if (RenderDataBase.IsSkillSlotOpened) {
 				RenderDataBase.IsSkillSlotOpened = false;
 			} else {
 				RenderDataBase.IsSkillSlotOpened = true;
+			}
+		}
+		if (Key == Keyboard.KEY_M) {
+			if (RenderDataBase.IsSkillMageMakingOpened) {
+				RenderDataBase.IsSkillMageMakingOpened = false;
+			} else {
+				RenderDataBase.IsSkillMageMakingOpened = true;
+			}
+		}
+		if (Key == Keyboard.KEY_Z) {
+			if (MainRoop.p.mp >= 10) {
+				for(int i = 0; i < MainRoop.p.skill.length; i++){
+					if(MainRoop.p.skill[i] == null){
+						MainRoop.p.skill[i] = new MagicMissile((int) MainRoop.p.getX() + 16 + 1, (int) MainRoop.p.getY() - 62);
+						MainRoop.p.setmp(MainRoop.p.mp -= 10);
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -252,24 +298,30 @@ public class GameListener {
 					Key_K.setReleased();
 				}
 			}
+			if (Keyboard.getEventKey() == Keyboard.KEY_M) {
+				if (Keyboard.getEventKeyState()) {
+					Key_M.setPressed();
+				} else {
+					Key_M.setReleased();
+				}
+			}
+			if (Keyboard.getEventKey() == Keyboard.KEY_Z) {
+				if (Keyboard.getEventKeyState()) {
+					Key_Z.setPressed();
+				} else {
+					Key_Z.setReleased();
+				}
+			}
 		}
 		HoldingEvent();
 	}
 
 	/*
-	 * PressingEvnet(); if (pressedtimekeyboard > 0) { pressedtimekeyboard++; if
-	 * (pressedtimekeyboard == pressedtimekeyboardMax) { pressedtimekeyboard =
-	 * 0; pressedtimekeyboardMax = 10; } } if (MainRoop.p.getMap() != null &&
-	 * MainRoop.p.moveable) { if (Keyboard.isKeyDown(Keyboard.KEY_0) &&
-	 * pressedtimekeyboard == 0 && MainRoop.p.mp >= 10) { try {
-	 * MainRoop.p.skill[0] = new MagicMissile( (int) MainRoop.p.getX() + 16 + 1,
-	 * (int) MainRoop.p.getY() - 62); MainRoop.p.setmp(MainRoop.p.mp -= 10); }
-	 * catch (IOException e) { e.printStackTrace(); } pressedtimekeyboard = 1; }
+	 * PressingEvnet();
 	 * 
 	 * 
 	 * 
-	 *  if
-	 * (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && MainRoop.p.npc != null &&
+	 * if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && MainRoop.p.npc != null &&
 	 * !MainRoop.p.moveable && pressedtimekeyboard == 0) {
 	 * MainRoop.p.npc.showedNpcTalk = 0; MainRoop.p.npc = null;
 	 * MainRoop.p.moveable = true; pressedtimekeyboard = 1; }
