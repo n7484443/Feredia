@@ -27,15 +27,15 @@ public class MagicMissile extends Skill {
 	public void updateShow(int show) {
 		if (!this.destroyon) {
 			AfterimageEffect effect1 = new AfterimageEffect(this.x + 10,
-					this.y, 14, 1, 20, 1);
+					this.y, 16, 1, 20, 1);
 			AfterimageEffect effect2 = new AfterimageEffect(this.x + 30,
-					this.y + 31, 14, 1, 20, 1);
+					this.y + 31, 16, 1, 20, 1);
 			AfterimageEffect effect3 = new AfterimageEffect(this.x + 50,
-					this.y + 62, 14, 1, 20, 1);
+					this.y + 62, 16, 1, 20, 1);
 			AfterimageEffect effect4 = new AfterimageEffect(this.x + 30,
-					this.y + 93, 14, 1, 20, 1);
+					this.y + 93, 16, 1, 20, 1);
 			AfterimageEffect effect5 = new AfterimageEffect(this.x + 10,
-					this.y + 124, 14, 1, 20, 1);
+					this.y + 124, 16, 1, 20, 1);
 			effect1.setHorizontal();
 			effect2.setHorizontal();
 			effect3.setHorizontal();
@@ -59,10 +59,10 @@ public class MagicMissile extends Skill {
 				
 			} else if (show == 26) {
 				for (int i = 0; i < projectile.length; i++) {
-					projectile[i].moveX(10);
-					projectile[i].moveCollisionBoxX(10);
-					projectile[i].effects[0].moveEffect(10, 0);
-					if(j != 4){ 
+					projectile[i].moveX(15);
+					projectile[i].moveCollisionBoxX(15);
+					projectile[i].effects[0].moveEffect(15, 0);
+					if(j != 5){
 						projectile[i].effects[0].addNumber(1);
 					}
 				}

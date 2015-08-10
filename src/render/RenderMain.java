@@ -30,7 +30,6 @@ public class RenderMain extends Thread {
 				ResourceLoader.getResourceAsStream("image/gui/bar.png"));
 		RenderSlot.Init();
 		RenderSkill.Init();
-		RenderSkill_Mage_MakingMagic.Init();
 		RenderMap.Init();
 	}
 
@@ -116,9 +115,6 @@ public class RenderMain extends Thread {
 		
 		if (RenderDataBase.IsSkillSlotOpened) {
 			new RenderSkill().render();
-		}
-		if (RenderDataBase.IsSkillMageMakingOpened) {
-			new RenderSkill_Mage_MakingMagic().render();
 		}
 
 		iterator = list.iterator();

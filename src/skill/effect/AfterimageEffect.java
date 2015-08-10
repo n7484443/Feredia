@@ -55,14 +55,14 @@ public class AfterimageEffect implements Effect {
 				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 				GL11.glBegin(GL11.GL_QUADS);
 				GL11.glTexCoord2f(0, 0);
-				GL11.glVertex2f(x - width * (i+1) + (i+1)*2, y + (i+1)*2);
+				GL11.glVertex2f(x - width * (i+1), y);
 				GL11.glTexCoord2f(t.getWidth(), 0);
-				GL11.glVertex2f(x - width * (i+1) - (i+1)*2 + t.getImageWidth(), y + (i+1)*2);
+				GL11.glVertex2f(x - width * (i+1) + t.getImageWidth(), y);
 				GL11.glTexCoord2f(t.getWidth(), t.getHeight());
-				GL11.glVertex2f(x - width * (i+1) - (i+1)*2 + t.getImageWidth(),
-						y + t.getImageHeight() - (i+1)*2);
+				GL11.glVertex2f(x - width * (i+1) + t.getImageWidth(),
+						y + t.getImageHeight());
 				GL11.glTexCoord2f(0, t.getHeight());
-				GL11.glVertex2f(x - width * (i+1) + (i+1)*2, y + t.getImageHeight() - (i+1)*2);
+				GL11.glVertex2f(x - width * (i+1), y + t.getImageHeight());
 				GL11.glEnd();
 			}
 		}

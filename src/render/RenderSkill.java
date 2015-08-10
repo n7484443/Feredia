@@ -56,14 +56,14 @@ public class RenderSkill {
 		return DeleteCollisionBox.CheckCollisioned(x, y);
 	}
 	
-	public static void MoveBefore(){
+	public static void MoveSkillBefore(){
 		beforex = x;
 		beforey = y;
 		beforeCollisionx = DragCollisionBox.x;
 		beforeCollisiony = DragCollisionBox.y;
 	}
 	
-	public static void Move(double Dx, double Dy){
+	public static void MoveSkill(double Dx, double Dy){
 		DragCollisionBox.x = beforeCollisionx + (int) Dx;
 		DragCollisionBox.y = beforeCollisiony + (int) Dy;
 		DeleteCollisionBox.x = beforeCollisionx + (int) Dx + 244;
