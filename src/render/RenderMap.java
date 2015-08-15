@@ -14,7 +14,7 @@ public class RenderMap {
 
 	public synchronized static void update() {
 		Map m = MainRoop.p.getMap();
-		
+
 		if (m != null) {
 			if (m.BackGround != null) {
 				m.BackGround.bind();
@@ -23,7 +23,8 @@ public class RenderMap {
 				GL11.glVertex2f(0, 0);
 				GL11.glTexCoord2f(0, m.BackGround.getHeight());
 				GL11.glVertex2f(0, 960);
-				GL11.glTexCoord2f(m.BackGround.getWidth(), m.BackGround.getHeight());
+				GL11.glTexCoord2f(m.BackGround.getWidth(),
+						m.BackGround.getHeight());
 				GL11.glVertex2f(1280, 960);
 				GL11.glTexCoord2f(m.BackGround.getWidth(), 0);
 				GL11.glVertex2f(1280, 0);
@@ -49,7 +50,7 @@ public class RenderMap {
 				}
 			}
 			GL11.glColor4f(0.0f, 0.0f, 1.0f, 0.5f);
-			if (m.portal != null){
+			if (m.portal != null) {
 				for (int i = 0; i < m.portal.length; i++) {
 					GL11.glBegin(GL11.GL_QUADS);
 					GL11.glVertex2d(m.portal[i].x, m.portal[i].y);
@@ -62,9 +63,9 @@ public class RenderMap {
 					GL11.glEnd();
 				}
 			}
-			
+
 			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
-			if (m.npc != null){
+			if (m.npc != null) {
 				for (int i = 0; i < m.npc.length; i++) {
 					Texture texture = m.npc[i].getTexture();
 					texture.bind();
@@ -83,8 +84,23 @@ public class RenderMap {
 					GL11.glEnd();
 				}
 			}
+			if (MainRoop.Debug) {
+				GL11.glDisable(GL11.GL_BLEND);
+				GL11.glColor4f(1.f, 0.f, 0.f, 0.5f);
+				GL11.glDisable(GL11.GL_TEXTURE);
+				for (int i = 0; i < m.Collision.length; i++) {
+					GL11.glBegin(GL11.GL_LINE_LOOP);
+					GL11.glVertex2f(m.Collision[i].x, m.Collision[i].y);
+					GL11.glVertex2f(m.Collision[i].x + m.Collision[i].width,
+							m.Collision[i].y);
+					GL11.glVertex2f(m.Collision[i].x + m.Collision[i].width,
+							m.Collision[i].y + m.Collision[i].height);
+					GL11.glVertex2f(m.Collision[i].x, m.Collision[i].y
+							+ m.Collision[i].height);
+					GL11.glEnd();
+				}
+			}
 		}
 
-		
 	}
 }

@@ -1,6 +1,9 @@
 package core;
 
+import java.io.IOException;
+
 import image.loader.MainImageLoader;
+import item.Items;
 import listener.GameListener;
 import map.Maps;
 
@@ -10,7 +13,6 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 
-import player.Items;
 import player.PlayerInfo;
 import player.Slot;
 import render.RenderMain;
@@ -18,6 +20,10 @@ import render.font.FontRenderer;
 import skill.mage.Skills_Mage;
 
 public class MainRoop {
+	
+	public final static boolean Debug = true;
+	
+	public static enum Gui {none, ItemSlot, SkillSlot, SkillMageMakingMagicSlot}
 	
 	public static boolean Gamerun = true;
 	public static int roop;
@@ -48,7 +54,7 @@ public class MainRoop {
 		Maps.Init();
 		Items.Init();
 		Skills_Mage.Init();
-		p = new PlayerInfo(1, 100, 100, 0, 10, 730, "플레이어", "초보자");
+		p = new PlayerInfo(1, 100, 100, 0, 1200, 730, "플레이어", "초보자");
 		p.sethp(100);
 		p.setmp(100);
 		p.setMap(Maps.tutorial_0);
@@ -88,7 +94,11 @@ public class MainRoop {
 			long before = System.currentTimeMillis();
 			Check();
 			CM.update();
-			RM.update();
+			try {
+				RM.update();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			long after = System.currentTimeMillis();
 			if ((50 - (after - before)) > 0) {
 				try {

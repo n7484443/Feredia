@@ -11,6 +11,11 @@ public class Key {
 		this.state = false;
 	}
 	
+	public void setEvent(boolean b){
+		if(b)this.setPressed();
+		else this.setReleased();
+	}
+	
 	public void setPressed(){
 		pressedEvent();
 	}

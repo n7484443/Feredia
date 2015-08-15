@@ -5,19 +5,16 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-
 import render.RenderDataBase;
-import render.RenderSkill;
-import render.RenderSkill_Mage_MakingMagic;
+import render.RenderItemSlot;
+import render.RenderMain;
 import skill.mage.MagicMissile;
 import core.MainRoop;
+import core.MainRoop.Gui;
 
 public class GameListener {
-	
-	public enum Clicked {none, SkillSlot, SkillMageMakingMagicSlot}
-	
-	private static Clicked ClickedSet;
-	
+	private static Gui ClickedSet;
+
 	public static int beforexmouse;
 	public static int beforeymouse;
 	public static final int DoubleWidth = 20;
@@ -35,7 +32,6 @@ public class GameListener {
 	public static Key Key_C;
 	public static Key Key_V;
 	public static Key Key_B;
-	
 
 	public static void Init() throws LWJGLException {
 		drag = false;
@@ -57,8 +53,7 @@ public class GameListener {
 		Key_C = new Key(Keyboard.KEY_C);
 		Key_V = new Key(Keyboard.KEY_V);
 		Key_B = new Key(Keyboard.KEY_B);
-		//EnumSet.of(Clicked.SkillSlot)
-		ClickedSet = Clicked.none;
+		ClickedSet = Gui.none;
 	}
 
 	public static long time;
@@ -73,7 +68,7 @@ public class GameListener {
 			if (Mouse.isInsideWindow()) {
 				if (Mouse.getEventButton() == 0 && !Mouse.getEventButtonState()) {
 					drag = false;
-					ClickedSet = Clicked.none;
+					ClickedSet = Gui.none;
 					if (time == 0) {
 						time = System.currentTimeMillis();
 						beforexmouse = Mouse.getX();
@@ -81,7 +76,7 @@ public class GameListener {
 					} else {
 						if (Mouse.getEventButton() == 0
 								&& !Mouse.getEventButtonState()) {
-							if (System.currentTimeMillis() - time < 200
+							if (System.currentTimeMillis() - time < 250
 									&& beforexmouse - DoubleWidth < Mouse
 											.getX()
 									&& beforexmouse + DoubleWidth > Mouse
@@ -104,15 +99,16 @@ public class GameListener {
 					beforexmouse = Mouse.getX();
 					beforeymouse = Mouse.getY();
 					drag = true;
-					RenderSkill.MoveBefore();
-					RenderSkill_Mage_MakingMagic.MoveBefore();
+					RenderMain.mage_Making.MoveBefore();
+					RenderMain.skillslot.MoveBefore();
+					RenderMain.itemslot.MoveBefore();
 				}
 			}
 		}
 		if (drag) {
 			DragEvent(Mouse.getX() - beforexmouse, beforeymouse - Mouse.getY());
 		}
-		if (System.currentTimeMillis() - time >= 200 && time != 0) {
+		if (System.currentTimeMillis() - time >= 250 && time != 0) {
 			ClickEvent(beforeymouse, beforeymouse);
 			beforexmouse = Mouse.getX();
 			beforeymouse = Mouse.getY();
@@ -121,45 +117,46 @@ public class GameListener {
 	}
 
 	public static void DragEvent(int x, int y) {
-		if (RenderDataBase.IsSkillSlotOpened && (RenderSkill.CheckDragCollisionBox(Mouse.getX(), Display.getHeight()
-				- Mouse.getY())
-				|| ClickedSet == Clicked.SkillSlot)) {
-			RenderSkill.Move(x, y);
-			ClickedSet = Clicked.SkillSlot;
-		}else if (RenderDataBase.IsSkillMageMakingOpened && (RenderSkill_Mage_MakingMagic.CheckDragCollisionBox(Mouse.getX(), Display.getHeight()
-				- Mouse.getY())
-				|| ClickedSet == Clicked.SkillMageMakingMagicSlot)) {
-			RenderSkill_Mage_MakingMagic.Move(x, y);
-			ClickedSet = Clicked.SkillMageMakingMagicSlot;
+		if (RenderDataBase.OpenGui.contains(Gui.SkillSlot)
+				&& ((RenderMain.skillslot.CheckDragCollisionBox(Mouse.getX(),
+						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none) || ClickedSet == Gui.SkillSlot)) {
+			RenderMain.skillslot.Move(x, y);
+			ClickedSet = Gui.SkillSlot;
+		} else if (RenderDataBase.OpenGui.contains(Gui.ItemSlot)
+				&& ((RenderMain.itemslot.CheckDragCollisionBox(Mouse.getX(),
+						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none) || ClickedSet == Gui.ItemSlot)) {
+			RenderMain.itemslot.Move(x, y);
+			ClickedSet = Gui.ItemSlot;
+		} else if (RenderDataBase.OpenGui
+				.contains(Gui.SkillMageMakingMagicSlot)
+				&& ((RenderMain.mage_Making.CheckDragCollisionBox(
+						Mouse.getX(), Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none) || ClickedSet == Gui.SkillMageMakingMagicSlot)) {
+			RenderMain.mage_Making.Move(x, y);
+			ClickedSet = Gui.SkillMageMakingMagicSlot;
 		}
 	}
 
 	public static void ClickEvent(int x, int y) {
-		if (RenderSkill.CheckDeleteCollisionBox(Mouse.getX(),
-				Display.getHeight() - Mouse.getY())) {
-			RenderDataBase.IsSkillSlotOpened = false;
+		if (RenderMain.skillslot.CheckDeleteCollisionBox(Mouse.getX(),
+				Display.getHeight() - Mouse.getY())
+				&& RenderDataBase.OpenGui.contains(Gui.SkillSlot)) {
+			RenderDataBase.reverse(Gui.SkillSlot);
+		} else if (RenderMain.itemslot.CheckDeleteCollisionBox(Mouse.getX(),
+				Display.getHeight() - Mouse.getY())
+				&& RenderDataBase.OpenGui.contains(Gui.ItemSlot)) {
+			RenderDataBase.reverse(Gui.ItemSlot);
 		}
 	}
 
 	public static void DoubleClickEvent(int x, int y) {
-
+		if (RenderDataBase.OpenGui.contains(Gui.ItemSlot))
+			RenderItemSlot.ItemStackEvent(x, Display.getHeight() - y);
 	}
 
 	public static void PressedEvent(int Key) {
 		if (Key == Keyboard.KEY_W) {
 			for (int i = 0; i < MainRoop.p.getMap().portal.length; i++) {
-				if ((MainRoop.p.getX() + 16 > MainRoop.p.getMap().width ? MainRoop.p
-						.getMap().portal[i].CheckCollision(
-						MainRoop.p.getMap().width, MainRoop.p.getY())
-						: MainRoop.p.getMap().portal[i].CheckCollision(
-								MainRoop.p.getX() + 16, MainRoop.p.getY()))
-						|| (MainRoop.p.getX() - 16 < 0 ? MainRoop.p.getMap().portal[i]
-								.CheckCollision(0, MainRoop.p.getY())
-								: MainRoop.p.getMap().portal[i].CheckCollision(
-										MainRoop.p.getX() - 16,
-										MainRoop.p.getY()))
-						|| MainRoop.p.getMap().portal[i].CheckCollision(
-								MainRoop.p.getX(), MainRoop.p.getY())) {
+				if (MainRoop.p.getMap().portal[i].CheckCollision(MainRoop.p.collisionBox)) {
 					MainRoop.p.getMap().portal[i].PlayerMoveMap();
 					break;
 				}
@@ -171,20 +168,7 @@ public class GameListener {
 		if (Key == Keyboard.KEY_Q && MainRoop.p.getMap().npc != null) {
 			if (MainRoop.p.moveable) {
 				for (int i = 0; i < MainRoop.p.getMap().npc.length; i++) {
-					if ((MainRoop.p.getX() + 16 > MainRoop.p.getMap().width ? MainRoop.p
-							.getMap().npc[i].CheckCollision(
-							MainRoop.p.getMap().width, MainRoop.p.getY())
-							: MainRoop.p.getMap().npc[i].CheckCollision(
-									MainRoop.p.getX() + 16, MainRoop.p.getY()))
-							|| (MainRoop.p.getX() - 16 < 0 ? MainRoop.p
-									.getMap().npc[i].CheckCollision(0,
-									MainRoop.p.getY())
-									: MainRoop.p.getMap().npc[i]
-											.CheckCollision(
-													MainRoop.p.getX() - 16,
-													MainRoop.p.getY()))
-							|| MainRoop.p.getMap().npc[i].CheckCollision(
-									MainRoop.p.getX(), MainRoop.p.getY())) {
+					if (MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.collisionBox)){
 						MainRoop.p.moveable = false;
 						MainRoop.p.npc = MainRoop.p.getMap().npc[i];
 						break;
@@ -198,33 +182,26 @@ public class GameListener {
 					MainRoop.p.moveable = true;
 				}
 			}
-		}
-		if (Key == Keyboard.KEY_I) {
-			if (RenderDataBase.IsItemSlotOpened) {
-				RenderDataBase.IsItemSlotOpened = false;
-			} else {
-				RenderDataBase.IsItemSlotOpened = true;
-			}
-		}
-		if (Key == Keyboard.KEY_K) {
-			if (RenderDataBase.IsSkillSlotOpened) {
-				RenderDataBase.IsSkillSlotOpened = false;
-			} else {
-				RenderDataBase.IsSkillSlotOpened = true;
-			}
-		}
-		if (Key == Keyboard.KEY_M) {
-			if (RenderDataBase.IsSkillMageMakingOpened) {
-				RenderDataBase.IsSkillMageMakingOpened = false;
-			} else {
-				RenderDataBase.IsSkillMageMakingOpened = true;
-			}
-		}
-		if (Key == Keyboard.KEY_Z) {
+		} else if (Key == Keyboard.KEY_I) {
+			RenderDataBase.reverse(Gui.ItemSlot);
+		} else if (Key == Keyboard.KEY_K) {
+			RenderDataBase.reverse(Gui.SkillSlot);
+		} else if (Key == Keyboard.KEY_M) {
+			RenderDataBase.reverse(Gui.SkillMageMakingMagicSlot);
+		} else if (Key == Keyboard.KEY_Z) {
 			if (MainRoop.p.mp >= 10) {
-				for(int i = 0; i < MainRoop.p.skill.length; i++){
-					if(MainRoop.p.skill[i] == null){
-						MainRoop.p.skill[i] = new MagicMissile((int) MainRoop.p.getX() + 16 + 1, (int) MainRoop.p.getY() - 62);
+				for (int i = 0; i < MainRoop.p.skill.length; i++) {
+					if (MainRoop.p.skill[i] == null) {
+						if (MainRoop.p.Dir)
+							MainRoop.p.skill[i] = new MagicMissile(
+									(int) MainRoop.p.getX() - 1 - 37,
+									(int) MainRoop.p.getY() - 124,
+									MainRoop.p.Dir);
+						else
+							MainRoop.p.skill[i] = new MagicMissile(
+									(int) MainRoop.p.getX() + MainRoop.p.w + 1,
+									(int) MainRoop.p.getY() - 124,
+									MainRoop.p.Dir);
 						MainRoop.p.setmp(MainRoop.p.mp -= 10);
 						break;
 					}
@@ -249,68 +226,34 @@ public class GameListener {
 
 	public static void CheckKeyboard() {
 		while (Keyboard.next()) {
-			if (Keyboard.getEventKey() == Keyboard.KEY_A) {
-				if (Keyboard.getEventKeyState()) {
-					Key_A.setPressed();
-				} else {
-					Key_A.setReleased();
-				}
-			}
-			if (Keyboard.getEventKey() == Keyboard.KEY_D) {
-				if (Keyboard.getEventKeyState()) {
-					Key_D.setPressed();
-				} else {
-					Key_D.setReleased();
-				}
-			}
-			if (Keyboard.getEventKey() == Keyboard.KEY_W) {
-				if (Keyboard.getEventKeyState()) {
-					Key_W.setPressed();
-				} else {
-					Key_W.setReleased();
-				}
-			}
-			if (Keyboard.getEventKey() == Keyboard.KEY_Q) {
-				if (Keyboard.getEventKeyState()) {
-					Key_Q.setPressed();
-				} else {
-					Key_Q.setReleased();
-				}
-			}
-			if (Keyboard.getEventKey() == Keyboard.KEY_SPACE) {
-				if (Keyboard.getEventKeyState()) {
-					Key_Space.setPressed();
-				} else {
-					Key_Space.setReleased();
-				}
-			}
-			if (Keyboard.getEventKey() == Keyboard.KEY_I) {
-				if (Keyboard.getEventKeyState()) {
-					Key_I.setPressed();
-				} else {
-					Key_I.setReleased();
-				}
-			}
-			if (Keyboard.getEventKey() == Keyboard.KEY_K) {
-				if (Keyboard.getEventKeyState()) {
-					Key_K.setPressed();
-				} else {
-					Key_K.setReleased();
-				}
-			}
-			if (Keyboard.getEventKey() == Keyboard.KEY_M) {
-				if (Keyboard.getEventKeyState()) {
-					Key_M.setPressed();
-				} else {
-					Key_M.setReleased();
-				}
-			}
-			if (Keyboard.getEventKey() == Keyboard.KEY_Z) {
-				if (Keyboard.getEventKeyState()) {
-					Key_Z.setPressed();
-				} else {
-					Key_Z.setReleased();
-				}
+			switch (Keyboard.getEventKey()) {
+			case Keyboard.KEY_A:
+				Key_A.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_D:
+				Key_D.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_W:
+				Key_W.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_Q:
+				Key_Q.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_SPACE:
+				Key_Space.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_I:
+				Key_I.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_K:
+				Key_K.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_M:
+				Key_M.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_Z:
+				Key_Z.setEvent(Keyboard.getEventKeyState());
+				break;
 			}
 		}
 		HoldingEvent();

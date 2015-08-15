@@ -23,8 +23,8 @@ public class Portal {
 		this.collision = new CollisionBox(x, y, width, height);
 	}
 	
-	public boolean CheckCollision(double x, double y){
-		return collision.CheckCollisioned(x, y);
+	public boolean CheckCollision(CollisionBox c){
+		return collision.CheckCollisioned(c);
 	}
 	
 	public void PlayerMoveMap(){

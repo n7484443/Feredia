@@ -4,37 +4,43 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
+
 import render.font.FontRenderer;
 import core.MainRoop;
+import core.MainRoop.Gui;
 
 public class RenderMain extends Thread {
 	public static List<RenderUnit> list = new LinkedList<RenderUnit>();
 	public static Iterator<RenderUnit> iterator;
+	public static RenderItemSlot itemslot;
+	public static RenderSkill skillslot;
+	public static RenderSkill_Mage_MakingMagic mage_Making;
 	@Override
 	public synchronized void start() {
 		try {
 			Init();
+			update();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		update();
 		Display.sync(50);
 	}
 
 	private void Init() throws IOException {
 		MainRoop.bar = TextureLoader.getTexture("png",
 				ResourceLoader.getResourceAsStream("image/gui/bar.png"));
-		RenderSlot.Init();
-		RenderSkill.Init();
-		RenderSkill_Mage_MakingMagic.Init();
+		itemslot = new RenderItemSlot();
+		skillslot = new RenderSkill();
+		mage_Making = new RenderSkill_Mage_MakingMagic();
 		RenderMap.Init();
 	}
 
-	public synchronized void update() {
+	public synchronized void update() throws IOException {
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
@@ -102,7 +108,12 @@ public class RenderMain extends Thread {
 		FontRenderer.render(10, 960 - 60, MainRoop.p.name);
 		FontRenderer.render(10, 960 - 30, "Level " + MainRoop.p.level);
 		FontRenderer.render(130, 960 - 60, MainRoop.p.job);
-
+		if(MainRoop.Debug){
+			FontRenderer.render((int)MainRoop.p.getX(), (int)MainRoop.p.getY(), String.valueOf(MainRoop.p.getY()));
+			for(int i = 0; i < MainRoop.p.getMap().Collision.length; i++){
+				FontRenderer.render(MainRoop.p.getMap().Collision[i].x, MainRoop.p.getMap().Collision[i].y, String.valueOf(MainRoop.p.getMap().Collision[i].y));
+			}
+		}
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
 		if (!MainRoop.p.moveable && MainRoop.p.npc != null) {
 			for (int i = 0; i < MainRoop.p.npc.npcTalk[MainRoop.p.npc.showedNpcTalk].Dialogue.length; i++) {
@@ -110,15 +121,15 @@ public class RenderMain extends Thread {
 			}
 		}
 
-		if (RenderDataBase.IsItemSlotOpened) {
-			new RenderSlot().render();
+		if (RenderDataBase.OpenGui.contains(Gui.SkillMageMakingMagicSlot)) {
+			mage_Making.render();
+		}
+		if (RenderDataBase.OpenGui.contains(Gui.ItemSlot)) {
+			itemslot.render();
 		}
 		
-		if (RenderDataBase.IsSkillSlotOpened) {
-			new RenderSkill().render();
-		}
-		if (RenderDataBase.IsSkillMageMakingOpened) {
-			new RenderSkill_Mage_MakingMagic().render();
+		if (RenderDataBase.OpenGui.contains(Gui.SkillSlot)) {
+			skillslot.render();
 		}
 
 		iterator = list.iterator();
@@ -137,10 +148,10 @@ public class RenderMain extends Thread {
 		int w = MainRoop.p.w;
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
 		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glVertex2d(MainRoop.p.getX() - w, MainRoop.p.getY() - h);
-		GL11.glVertex2d(MainRoop.p.getX() - w, MainRoop.p.getY() + h);
+		GL11.glVertex2d(MainRoop.p.getX(), MainRoop.p.getY());
+		GL11.glVertex2d(MainRoop.p.getX() + w, MainRoop.p.getY());
 		GL11.glVertex2d(MainRoop.p.getX() + w, MainRoop.p.getY() + h);
-		GL11.glVertex2d(MainRoop.p.getX() + w, MainRoop.p.getY() - h);
+		GL11.glVertex2d(MainRoop.p.getX(), MainRoop.p.getY() + h);
 		GL11.glEnd();
 	}
 

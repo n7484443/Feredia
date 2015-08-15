@@ -11,6 +11,7 @@ public class SkillImageLoader {
 	
 	public static void Init() throws IOException{		
 		SkillTexture[0] = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/skill/mage_skill_magic_missile.png"));
-		SkillTexture[1] = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/skill/mage_skill_magic_missile_effect.png"));
+		SkillTexture[1] = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/skill/mage_skill_missile.png"));
+		SkillTexture[2] = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/skill/mage_skill_missile_collision.png"));
 	}
 }

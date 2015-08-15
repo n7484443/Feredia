@@ -24,8 +24,8 @@ public class PlayerInfo {
 
 	public final int maxlevel = 100;
 
-	public final int w = 16;
-	public final int h = 16;
+	public final int w = 32;
+	public final int h = 32;
 
 	private Map m;
 
@@ -34,8 +34,11 @@ public class PlayerInfo {
 	public String job;
 
 	public boolean moveable;
+	public boolean Dir;
 
 	public NpcBase npc;
+	
+	public CollisionBox collisionBox;
 	
 	public Skill[] skill;
 
@@ -52,6 +55,8 @@ public class PlayerInfo {
 		this.Vy = 0;
 		this.isAir = false;
 		this.moveable = true;
+		this.Dir = false;
+		this.collisionBox = new CollisionBox(x, y, w, h);
 		npc = null;
 		skill = new Skill[20];
 	}
@@ -71,16 +76,18 @@ public class PlayerInfo {
 		this.x += a;
 		if (this.x + w > this.m.width)
 			this.x = this.m.width - w;
-		if (this.x - w < 0)
-			this.x = w;
+		if (this.x < 0)
+			this.x = 0;
+		this.collisionBox.x += a;
 	}
 
 	public void addY(double a) {
 		this.y += a;
 		if (this.y + h > this.m.height)
 			this.y = this.m.height - h;
-		if (this.y - h < 0)
-			this.x = h;
+		if (this.y < 0)
+			this.y = 0;
+		this.collisionBox.y += a;
 	}
 
 	public void setX(double x) {
@@ -101,7 +108,7 @@ public class PlayerInfo {
 
 	public boolean checkCollisionUnderBlock() {
 		for (int i = 0; i < MainRoop.p.m.Collision.length; i++) {
-			if (MainRoop.p.m.Collision[i].CheckCollisioned(x, y + h + 1)) {
+			if (MainRoop.p.m.Collision[i].CheckCollisionedPoint(this.x, this.y + this.h) || MainRoop.p.m.Collision[i].CheckCollisionedPoint(this.x + this.w, this.y + this.h)) {
 				return true;
 			}
 		}
@@ -111,7 +118,7 @@ public class PlayerInfo {
 	public boolean checkCollisionBlock(double x, double y) {
 		for (int i = 0; i < MainRoop.p.m.Collision.length; i++) {
 				if (MainRoop.p.m.Collision[i] != null
-						&& MainRoop.p.m.Collision[i].CheckCollisioned(x, y)) {
+						&& MainRoop.p.m.Collision[i].CheckCollisionedPoint(x, y)) {
 					return true;
 			}
 		}
@@ -120,7 +127,7 @@ public class PlayerInfo {
 
 	public CollisionBox getCollisionBlock(double x, double y) {
 		for (int i = 0; i < this.m.Collision.length; i++) {
-			if (this.m.Collision[i].CheckCollisioned(x, y))
+			if (this.m.Collision[i].CheckCollisionedPoint(x, y))
 				return this.m.Collision[i];
 		}
 		return null;

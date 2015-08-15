@@ -1,13 +1,21 @@
 package render;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import core.MainRoop.Gui;
+
 public class RenderDataBase {
-	public static boolean IsItemSlotOpened;
-	
-	public static boolean IsSkillSlotOpened;
-	public static boolean IsSkillMageMakingOpened;
+	public static Set<Gui> OpenGui;
 	public static void Init(){
-		IsItemSlotOpened = false;
-		IsSkillSlotOpened = false;
-		IsSkillMageMakingOpened = false;
+		OpenGui = new HashSet<Gui>();
+	}
+	
+	public static void reverse(Gui gui){
+		if(OpenGui.contains(gui)){
+			OpenGui.remove(gui);
+		}else{
+			OpenGui.add(gui);
+		}
 	}
 }

@@ -34,9 +34,9 @@ public class NpcBase {
 	
 
 	
-	public boolean CheckCollision(double x, double y){
+	public boolean CheckCollision(CollisionBox c){
 		if(collision != null){
-			return collision.CheckCollisioned(x, y);
+			return collision.CheckCollisioned(c);
 		}
 		return false;
 	}

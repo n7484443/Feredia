@@ -10,7 +10,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import skill.SkillSlot;
 import collision.CollisionBox;
 
-public class RenderSkill_Mage_MakingMagic {
+public class RenderSkill_Mage_MakingMagic extends GuiBase{
 	public static SkillSlot[] s;
 	public static int x;
 	public static int y;
@@ -22,9 +22,6 @@ public class RenderSkill_Mage_MakingMagic {
 	public static int showy;
 	
 	public static Texture gui;
-	
-	public static CollisionBox DragCollisionBox;
-	public static CollisionBox DeleteCollisionBox;
 	
 	public void render() {
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.f);
@@ -46,22 +43,14 @@ public class RenderSkill_Mage_MakingMagic {
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 	
-	public static boolean CheckDragCollisionBox(double x, double y){
-		return DragCollisionBox.CheckCollisioned(x, y);
-	}
-	
-	public static boolean CheckDeleteCollisionBox(double x, double y){
-		return DeleteCollisionBox.CheckCollisioned(x, y);
-	}
-	
-	public static void MoveBefore(){
+	public void MoveBefore(){
 		beforex = x;
 		beforey = y;
 		beforeCollisionx = DragCollisionBox.x;
 		beforeCollisiony = DragCollisionBox.y;
 	}
 	
-	public static void Move(double Dx, double Dy){
+	public void Move(double Dx, double Dy){
 		DragCollisionBox.x = beforeCollisionx + (int) Dx;
 		DragCollisionBox.y = beforeCollisiony + (int) Dy;
 		DeleteCollisionBox.x = beforeCollisionx + (int) Dx + 244;
@@ -70,7 +59,7 @@ public class RenderSkill_Mage_MakingMagic {
 		y = beforey + (int)Dy;
 	}
 	
-	public static void Init() throws IOException{
+	public RenderSkill_Mage_MakingMagic() throws IOException{
 		x = 0;
 		y = 0;
 		gui = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/gui/skillmagemaking.png"));

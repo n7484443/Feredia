@@ -1,10 +1,7 @@
 package player;
 
-import java.io.IOException;
+import item.ItemStack;
 
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 public class Slot {
 	public ItemStack itemStack;
@@ -13,13 +10,10 @@ public class Slot {
 		this.itemStack = i;
 	}
 	
-	public static Texture texture;
-	
-	public static void Init() throws IOException{
-		texture = TextureLoader.getTexture(".png", ResourceLoader.getResourceAsStream("image/gui/item_slot.png"));
+	public void useItem(){
+		itemStack.useItem();
 	}
 	
-	public static Texture getTexture(){
-		return texture;
+	public static void Init(){
 	}
 }

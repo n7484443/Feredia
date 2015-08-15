@@ -49,7 +49,7 @@ public class Map {
 	
 	public void Inter(){
 		for(int i = 0; i < MainRoop.p.skill.length; i++){
-			MainRoop.p.skill[i] = null;
+			MainRoop.p.skill[i].destroy();
 		}
 	}
 	public void Outer(){

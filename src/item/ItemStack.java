@@ -1,4 +1,5 @@
-package player;
+package item;
+
 
 public class ItemStack {
 	public Item i;
@@ -11,5 +12,12 @@ public class ItemStack {
 	public ItemStack(int stackSize, Item i){
 		this.StackSize = stackSize;
 		this.i = i;
+	}
+
+	public void useItem() {
+		if(StackSize > 0 && i.UseAble()){
+			i.UseItemEvent();
+			StackSize -= 1;
+		}
 	}
 }
