@@ -35,32 +35,20 @@ public class CircuitMain extends Thread {
 
 	public void jumpPlayer() {
 		if (MainRoop.p.getMap() != null) {
-			System.out.println(MainRoop.p.checkCollisionUnderBlock());
 			if (!MainRoop.p.checkCollisionUnderBlock()) {
 				MainRoop.p.Vy += 2;
 				if (MainRoop.p.Vy > 15)
 					MainRoop.p.Vy = 15;
-				if (MainRoop.p.checkCollisionBlock(MainRoop.p.getX(),
-						MainRoop.p.getY() + MainRoop.p.h + MainRoop.p.Vy + 1)
-						|| MainRoop.p.checkCollisionBlock(
-								MainRoop.p.getX() + 32, MainRoop.p.getY()
-										+ MainRoop.p.h + MainRoop.p.Vy + 1)) {
-					CollisionBox a1 = MainRoop.p.getCollisionBlock(
-							MainRoop.p.getX(), MainRoop.p.getY() + MainRoop.p.h
-									+ MainRoop.p.Vy + 1);
-					CollisionBox a2 = MainRoop.p.getCollisionBlock(
-							MainRoop.p.getX() + 32, MainRoop.p.getY()
-									+ MainRoop.p.h + +MainRoop.p.Vy + 1);
-
-					double b = (a1 == null ? (a2 == null ? 15 : a2.y)
-							: (a2 == null ? a1.y : Math.min(a1.y, a2.y)))
-							- MainRoop.p.getY() - MainRoop.p.h;
+				if (MainRoop.p.checkCollisionBlock(0, MainRoop.p.Vy)) {
+					CollisionBox a1 = MainRoop.p.getCollisionBlock(0,MainRoop.p.Vy);
+					double b = a1.y - MainRoop.p.getY() - MainRoop.p.h;
 					if (b <= MainRoop.p.Vy) {
 						MainRoop.p.addY(b);
 						MainRoop.p.Vy = 0;
 						MainRoop.p.isAir = false;
 					} else {
 						MainRoop.p.addY(MainRoop.p.Vy);
+						MainRoop.p.isAir = false;
 					}
 				} else {
 					MainRoop.p.addY(MainRoop.p.Vy);
@@ -68,32 +56,21 @@ public class CircuitMain extends Thread {
 			} else {
 				if (MainRoop.p.isAir) {
 					MainRoop.p.addY(MainRoop.p.Vy);
-					MainRoop.p.Vy -= 2;
 				}
 			}
 		}
 	}
 
-	public void movePlayer(double x) {
+	public void movePlayer(int x) {
 		if (x < 0) {
 			MainRoop.p.Dir = true;
 		} else {
 			MainRoop.p.Dir = false;
 		}
-		if (MainRoop.p.checkCollisionBlock(MainRoop.p.getX() + x
-				+ (x < 0 ? -1 : MainRoop.p.w + 1), MainRoop.p.getY())) {
-			CollisionBox c = MainRoop.p.getCollisionBlock(MainRoop.p.getX() + x
-					+ (x < 0 ? -1 : MainRoop.p.w + 1), MainRoop.p.getY());
-			if (c != null) {
-				double a = (x < 0 ? MainRoop.p.getX() - c.x : c.x
-						- MainRoop.p.getX() - MainRoop.p.w);
-				if (a <= 3) {
-					MainRoop.p.addX(a);
-				} else {
-					MainRoop.p.addX(x);
-				}
-			}
-		} else {
+		if (MainRoop.p.checkCollisionBlock(x + (x < 0 ? 1 : -1), -1)) {
+			CollisionBox a1 = MainRoop.p.getCollisionBlock(x + (x < 0 ? 1 : -1),-1);
+			MainRoop.p.setX(a1.x + (x < 0 ? 1 : -MainRoop.p.w-1));
+		}else{
 			MainRoop.p.addX(x);
 		}
 	}

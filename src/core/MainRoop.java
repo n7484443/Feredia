@@ -54,7 +54,7 @@ public class MainRoop {
 		Maps.Init();
 		Items.Init();
 		Skills_Mage.Init();
-		p = new PlayerInfo(1, 100, 100, 0, 1200, 730, "플레이어", "초보자");
+		p = new PlayerInfo(1, 100, 100, 0, 1100, 730, "플레이어", "초보자");
 		p.sethp(100);
 		p.setmp(100);
 		p.setMap(Maps.tutorial_0);
