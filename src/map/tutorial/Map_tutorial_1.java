@@ -37,7 +37,7 @@ public class Map_tutorial_1 extends Map{
 		Collision = new CollisionBox[1];
 		Collision[0] = new CollisionBox(0, this.height - 6*32, this.width, 6*32);
 		
-		portal[0] = new Portal(0, height-32*7, 32*39, height-32*8, Maps.tutorial_0);
+		portal[0] = new Portal(0, height-32*7, 32*39, height-32*8+16, Maps.tutorial_0);
 	}
 
 	public void Inter(){}

@@ -18,7 +18,7 @@ public class PlayerInfo {
 	private double x;
 	private double y;
 
-	public int Vy;
+	public double Vy;
 
 	public boolean isAir;
 
@@ -68,42 +68,34 @@ public class PlayerInfo {
 		}
 	}
 
-	public void moveX(int x) {
+	public void moveX(double x) {
 		MainRoop.CM.movePlayer(x);
 	}
 
 	public void addX(double a) {
 		this.x += a;
-		this.collisionBox.x += a;
-		if (this.x + w > this.m.width){
+		if (this.x + w > this.m.width)
 			this.x = this.m.width - w;
-			this.collisionBox.x = this.m.width - w;
-		}else if (this.x < 0){
+		if (this.x < 0)
 			this.x = 0;
-			this.collisionBox.x = 0;
-		}
+		this.collisionBox.x += a;
 	}
 
 	public void addY(double a) {
 		this.y += a;
-		this.collisionBox.y += a;
-		if (this.y + h > this.m.height){
+		if (this.y + h > this.m.height)
 			this.y = this.m.height - h;
-			this.collisionBox.y = this.m.height - h;
-		}else if (this.y < 0){
+		if (this.y < 0)
 			this.y = 0;
-			this.collisionBox.y = 0;
-		}
+		this.collisionBox.y += a;
 	}
 
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
-		this.collisionBox.x = x;
 	}
 
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
-		this.collisionBox.y = y;
 	}
 
 	public double getX() {
@@ -116,27 +108,27 @@ public class PlayerInfo {
 
 	public boolean checkCollisionUnderBlock() {
 		for (int i = 0; i < MainRoop.p.m.Collision.length; i++) {
-			if (collisionBox.CheckCollisioned(MainRoop.p.m.Collision[i])) {
+			if (MainRoop.p.m.Collision[i].CheckCollisionedPoint(this.x, this.y + this.h) || MainRoop.p.m.Collision[i].CheckCollisionedPoint(this.x + this.w, this.y + this.h)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public boolean checkCollisionBlock(int x, int y) {
+	public boolean checkCollisionBlock(double x, double y) {
 		for (int i = 0; i < MainRoop.p.m.Collision.length; i++) {
-				if (collisionBox.CheckCollisioned(x, y, MainRoop.p.m.Collision[i])) {
+				if (MainRoop.p.m.Collision[i] != null
+						&& MainRoop.p.m.Collision[i].CheckCollisionedPoint(x, y)) {
 					return true;
 			}
 		}
 		return false;
 	}
 
-	public CollisionBox getCollisionBlock(int x, int y) {
+	public CollisionBox getCollisionBlock(double x, double y) {
 		for (int i = 0; i < this.m.Collision.length; i++) {
-			if (collisionBox.CheckCollisioned(x, y, MainRoop.p.m.Collision[i])){
+			if (this.m.Collision[i].CheckCollisionedPoint(x, y))
 				return this.m.Collision[i];
-			}
 		}
 		return null;
 	}
