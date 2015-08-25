@@ -25,6 +25,7 @@ public class GameListener {
 	public static Key Key_Q;
 	public static Key Key_I;
 	public static Key Key_K;
+	public static Key Key_J;
 	public static Key Key_M;
 	public static Key Key_Space;
 	public static Key Key_Z;
@@ -46,6 +47,7 @@ public class GameListener {
 		Key_Q = new Key(Keyboard.KEY_Q);
 		Key_I = new Key(Keyboard.KEY_I);
 		Key_K = new Key(Keyboard.KEY_K);
+		Key_J = new Key(Keyboard.KEY_J);
 		Key_M = new Key(Keyboard.KEY_M);
 		Key_Space = new Key(Keyboard.KEY_SPACE);
 		Key_Z = new Key(Keyboard.KEY_Z);
@@ -102,6 +104,7 @@ public class GameListener {
 					RenderMain.mage_Making.MoveBefore();
 					RenderMain.skillslot.MoveBefore();
 					RenderMain.itemslot.MoveBefore();
+					RenderMain.minimap.MoveBefore();
 				}
 			}
 		}
@@ -127,6 +130,11 @@ public class GameListener {
 						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none) || ClickedSet == Gui.ItemSlot)) {
 			RenderMain.itemslot.Move(x, y);
 			ClickedSet = Gui.ItemSlot;
+		} else if (RenderDataBase.OpenGui.contains(Gui.MiniMap)
+				&& ((RenderMain.minimap.CheckDragCollisionBox(Mouse.getX(),
+						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none) || ClickedSet == Gui.MiniMap)) {
+			RenderMain.minimap.Move(x, y);
+			ClickedSet = Gui.MiniMap;
 		} else if (RenderDataBase.OpenGui
 				.contains(Gui.SkillMageMakingMagicSlot)
 				&& ((RenderMain.mage_Making.CheckDragCollisionBox(
@@ -186,6 +194,8 @@ public class GameListener {
 			RenderDataBase.reverse(Gui.ItemSlot);
 		} else if (Key == Keyboard.KEY_K) {
 			RenderDataBase.reverse(Gui.SkillSlot);
+		} else if (Key == Keyboard.KEY_J) {
+			RenderDataBase.reverse(Gui.MiniMap);
 		} else if (Key == Keyboard.KEY_M) {
 			RenderDataBase.reverse(Gui.SkillMageMakingMagicSlot);
 		} else if (Key == Keyboard.KEY_Z) {
@@ -247,6 +257,9 @@ public class GameListener {
 				break;
 			case Keyboard.KEY_K:
 				Key_K.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_J:
+				Key_J.setEvent(Keyboard.getEventKeyState());
 				break;
 			case Keyboard.KEY_M:
 				Key_M.setEvent(Keyboard.getEventKeyState());

@@ -36,7 +36,7 @@ public class CircuitMain extends Thread {
 	public void jumpPlayer() {
 		if (MainRoop.p.getMap() != null) {
 			if (!MainRoop.p.checkCollisionUnderBlock()) {
-				MainRoop.p.Vy += 2;
+				MainRoop.p.Vy += 1.5;
 				if (MainRoop.p.Vy > 15)
 					MainRoop.p.Vy = 15;
 				if (MainRoop.p.checkCollisionBlock(0, MainRoop.p.Vy)) {
@@ -69,7 +69,7 @@ public class CircuitMain extends Thread {
 		}
 		if (MainRoop.p.checkCollisionBlock(x + (x < 0 ? 1 : -1), -1)) {
 			CollisionBox a1 = MainRoop.p.getCollisionBlock(x + (x < 0 ? 1 : -1),-1);
-			MainRoop.p.setX(a1.x + (x < 0 ? 1 : -MainRoop.p.w-1));
+			MainRoop.p.setX(a1.x + (x < 0 ? a1.width + 1 : -MainRoop.p.w-1));
 		}else{
 			MainRoop.p.addX(x);
 		}

@@ -20,6 +20,7 @@ public class RenderMain extends Thread {
 	public static RenderItemSlot itemslot;
 	public static RenderSkill skillslot;
 	public static RenderSkill_Mage_MakingMagic mage_Making;
+	public static RenderMiniMap minimap;
 	@Override
 	public synchronized void start() {
 		try {
@@ -37,6 +38,7 @@ public class RenderMain extends Thread {
 		itemslot = new RenderItemSlot();
 		skillslot = new RenderSkill();
 		mage_Making = new RenderSkill_Mage_MakingMagic();
+		minimap = new RenderMiniMap();
 		RenderMap.Init();
 	}
 
@@ -126,6 +128,10 @@ public class RenderMain extends Thread {
 		}
 		if (RenderDataBase.OpenGui.contains(Gui.ItemSlot)) {
 			itemslot.render();
+		}
+		
+		if (RenderDataBase.OpenGui.contains(Gui.MiniMap)) {
+			minimap.render();
 		}
 		
 		if (RenderDataBase.OpenGui.contains(Gui.SkillSlot)) {

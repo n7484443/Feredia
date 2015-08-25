@@ -21,9 +21,9 @@ import skill.mage.Skills_Mage;
 
 public class MainRoop {
 	
-	public final static boolean Debug = true;
+	public final static boolean Debug = false;
 	
-	public static enum Gui {none, ItemSlot, SkillSlot, SkillMageMakingMagicSlot}
+	public static enum Gui {none, ItemSlot, SkillSlot, MiniMap, SkillMageMakingMagicSlot}
 	
 	public static boolean Gamerun = true;
 	public static int roop;
@@ -100,9 +100,9 @@ public class MainRoop {
 				e1.printStackTrace();
 			}
 			long after = System.currentTimeMillis();
-			if ((50 - (after - before)) > 0) {
+			if ((35 - (after - before)) > 0) {
 				try {
-					Thread.sleep(50 - (after - before));
+					Thread.sleep(35 - (after - before));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

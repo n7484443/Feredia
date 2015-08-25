@@ -43,7 +43,6 @@ public class Map_tutorial_0 extends Map{
 			mapblock[i][24] = 7;
 		}
 		mapblock[width/32-2][24] = 1;
-		mapblock[width/32-1][24] = 1;
 		mapblock[width/32-2][23] = 5;
 		mapblock[width/32-1][23] = 7;
 		

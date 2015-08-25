@@ -4,16 +4,12 @@ import java.io.IOException;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
+import core.MainRoop;
 import render.font.FontRenderer;
-import skill.SkillSlot;
 import collision.CollisionBox;
 
-public class RenderSkill_Mage_MakingMagic extends GuiBase{
-	public static SkillSlot[] s;
+public class RenderMiniMap extends GuiBase{
 	public static int x;
 	public static int y;
 	public static int beforex;
@@ -23,27 +19,30 @@ public class RenderSkill_Mage_MakingMagic extends GuiBase{
 	public static int showx;
 	public static int showy;
 	
-	public static Texture gui;
-	
 	public void render() {
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.f);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		gui.bind();
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glTexCoord2f(0, 0);
-		GL11.glVertex2f(x, y);
-		GL11.glTexCoord2f(gui.getWidth(), 0);
-		GL11.glVertex2f(x+432, y);
-		GL11.glTexCoord2f(gui.getWidth(), gui.getHeight());
-		GL11.glVertex2f(x+432, y+432);
-		GL11.glTexCoord2f(0, gui.getHeight());
-		GL11.glVertex2f(x, y+432);
-		GL11.glEnd();
+		for(int i = 0; i < MainRoop.p.getMap().width / 32; i++){
+			for(int j = 0; j < MainRoop.p.getMap().height / 32; j++){
+				if(MainRoop.p.getMap().mapblock[i][j] != 0){
+					MainRoop.p.getMap().getColorMiniMap(MainRoop.p.getMap().mapblock[i][j] - 1).bind();
+					GL11.glBegin(GL11.GL_QUADS);
+					GL11.glVertex2f(x + i, y + j);
+					GL11.glVertex2f(x + i + 1, y + j);
+					GL11.glVertex2f(x + i + 1, y + j + 1);
+					GL11.glVertex2f(x + i, y + j + 1);
+					GL11.glEnd();
+				}
+				
+			}
+		}
+		System.out.println(1);
+		
 
-		FontRenderer.kor_white.bind();
-		FontRenderer.renderReSizeableWithColor(x, y, 10, "스킬 제작 창", Color.yellow, 1.0f);
+		FontRenderer.kor_black.bind();
+		FontRenderer.renderReSizeableWithColor(x, y, 10, "미니 맵", Color.yellow, 1.0f);
 		
 		GL11.glDisable(GL11.GL_BLEND);
 	}
@@ -64,10 +63,9 @@ public class RenderSkill_Mage_MakingMagic extends GuiBase{
 		y = beforey + (int)Dy;
 	}
 	
-	public RenderSkill_Mage_MakingMagic() throws IOException{
+	public RenderMiniMap() throws IOException{
 		x = 0;
 		y = 0;
-		gui = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/gui/skillmagemaking.png"));
 		DragCollisionBox = new CollisionBox(x, y, 434, 14);
 		DeleteCollisionBox = new CollisionBox(x + 434, y, 12, 12);
 	}

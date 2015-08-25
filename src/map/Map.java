@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import npc.NpcBase;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 
 import core.MainRoop;
@@ -30,6 +31,10 @@ public class Map {
 	public Portal[] portal;
 	
 	public Texture BackGround;
+	
+	public Color getColorMiniMap(int i){
+		return MapImageLoader.blockColor[i];
+	}
 	
 	public Texture getBackGround(){
 		return BackGround;

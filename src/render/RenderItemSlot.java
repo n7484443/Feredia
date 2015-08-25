@@ -67,6 +67,8 @@ public class RenderItemSlot extends GuiBase{
 				}
 			}
 		}
+		FontRenderer.kor_black.bind();
+		FontRenderer.renderReSizeableWithColor(x, y, 10, "아이템 창", Color.yellow, 1.0f);
 
 		GL11.glDisable(GL11.GL_BLEND);
 		

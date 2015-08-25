@@ -1,12 +1,15 @@
 package render;
 
 import java.io.IOException;
+
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import collision.CollisionBox;
+import render.font.FontRenderer;
 import skill.SkillSlot;
 
 public class RenderSkill extends GuiBase{	
@@ -41,6 +44,8 @@ public class RenderSkill extends GuiBase{
 		for(int i = 0; i < 4; i++){
 			
 		}
+		FontRenderer.kor_black.bind();
+		FontRenderer.renderReSizeableWithColor(x, y, 10, "스킬 창", Color.yellow, 1.0f);
 		
 		GL11.glDisable(GL11.GL_BLEND);
 	}
