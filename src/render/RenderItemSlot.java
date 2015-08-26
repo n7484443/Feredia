@@ -4,7 +4,6 @@ import item.ItemStack;
 import item.Items;
 import java.io.IOException;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -63,12 +62,12 @@ public class RenderItemSlot extends GuiBase{
 						GL11.glVertex2f((i+1)*32-5 + x, j*32+5 + 37 + y);
 					GL11.glEnd();
 					FontRenderer.kor_black.bind();
-					FontRenderer.renderReSizeableWithColor(i * 32 + x, j * 32 + 37 + y, 10, String.valueOf(s[i + j*4].itemStack.StackSize), Color.yellow, 1.0f);
+					FontRenderer.renderReSizeableWithColor(i * 32 + x, j * 32 + 37 + y, 10, String.valueOf(s[i + j*4].itemStack.StackSize), 1.0f);
 				}
 			}
 		}
 		FontRenderer.kor_black.bind();
-		FontRenderer.renderReSizeableWithColor(x, y, 10, "아이템 창", Color.yellow, 1.0f);
+		FontRenderer.renderReSizeableWithColor(x, y, 10, "아이템 창", 1.0f);
 
 		GL11.glDisable(GL11.GL_BLEND);
 		

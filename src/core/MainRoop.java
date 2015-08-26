@@ -1,18 +1,15 @@
 package core;
 
 import java.io.IOException;
-
 import image.loader.MainImageLoader;
 import item.Items;
 import listener.GameListener;
 import map.Maps;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
-
 import player.PlayerInfo;
 import player.Slot;
 import render.RenderMain;

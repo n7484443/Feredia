@@ -1,9 +1,7 @@
 package render;
 
 import java.io.IOException;
-
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -43,7 +41,7 @@ public class RenderSkill_Mage_MakingMagic extends GuiBase{
 		GL11.glEnd();
 
 		FontRenderer.kor_white.bind();
-		FontRenderer.renderReSizeableWithColor(x, y, 10, "스킬 제작 창", Color.yellow, 1.0f);
+		FontRenderer.renderReSizeableWithColor(x, y, 10, "스킬 제작 창", 1.0f);
 		
 		GL11.glDisable(GL11.GL_BLEND);
 	}

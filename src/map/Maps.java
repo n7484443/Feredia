@@ -10,6 +10,7 @@ public class Maps {
 	public static Map_tutorial_1 tutorial_1;
 	
 	public static void Init() throws IOException{
+		Tiles.Init();
 		tutorial_0 = new Map_tutorial_0();
 		tutorial_1 = new Map_tutorial_1();
 		

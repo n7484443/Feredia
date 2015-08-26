@@ -122,23 +122,23 @@ public class GameListener {
 	public static void DragEvent(int x, int y) {
 		if (RenderDataBase.OpenGui.contains(Gui.SkillSlot)
 				&& ((RenderMain.skillslot.CheckDragCollisionBox(Mouse.getX(),
-						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none) || ClickedSet == Gui.SkillSlot)) {
+						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none && Mouse.getEventButtonState()) || ClickedSet == Gui.SkillSlot)) {
 			RenderMain.skillslot.Move(x, y);
 			ClickedSet = Gui.SkillSlot;
 		} else if (RenderDataBase.OpenGui.contains(Gui.ItemSlot)
 				&& ((RenderMain.itemslot.CheckDragCollisionBox(Mouse.getX(),
-						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none) || ClickedSet == Gui.ItemSlot)) {
+						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none && Mouse.getEventButtonState()) || ClickedSet == Gui.ItemSlot)) {
 			RenderMain.itemslot.Move(x, y);
 			ClickedSet = Gui.ItemSlot;
 		} else if (RenderDataBase.OpenGui.contains(Gui.MiniMap)
 				&& ((RenderMain.minimap.CheckDragCollisionBox(Mouse.getX(),
-						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none) || ClickedSet == Gui.MiniMap)) {
+						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none && Mouse.getEventButtonState()) || ClickedSet == Gui.MiniMap)) {
 			RenderMain.minimap.Move(x, y);
 			ClickedSet = Gui.MiniMap;
 		} else if (RenderDataBase.OpenGui
 				.contains(Gui.SkillMageMakingMagicSlot)
 				&& ((RenderMain.mage_Making.CheckDragCollisionBox(
-						Mouse.getX(), Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none) || ClickedSet == Gui.SkillMageMakingMagicSlot)) {
+						Mouse.getX(), Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none && Mouse.getEventButtonState()) || ClickedSet == Gui.SkillMageMakingMagicSlot)) {
 			RenderMain.mage_Making.Move(x, y);
 			ClickedSet = Gui.SkillMageMakingMagicSlot;
 		}

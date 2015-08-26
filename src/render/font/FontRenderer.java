@@ -132,10 +132,9 @@ public class FontRenderer {
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 	
-	public synchronized static void renderReSizeableWithColor(int x1, int y1, int wsize, String str, Color c, float Alpha){
+	public synchronized static void renderReSizeableWithColor(int x1, int y1, int wsize, String str, float Alpha){
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		c.bind();
 		for(int i = 0; i < str.length(); i++){
 			int fontx = x.get((int)str.charAt(i));
 			int fonty = y.get((int)str.charAt(i));

@@ -20,7 +20,7 @@ public class Map {
 	public final int width = 1280;
 	public final int height = 960;
 
-	public int[][] mapblock;
+	public Tile[][] mapblock;
 	
 	public String name;
 	
@@ -45,15 +45,25 @@ public class Map {
 	}
 	
 	public int getMapTextureXSize(int i, int j){
-		return MapImageLoader.blockTexturexSize[mapblock[i][j]-1];
+		if(mapblock[i][j].getnum() != -1){
+			return MapImageLoader.blockTexturexSize[mapblock[i][j].getTexture()];
+		}else{
+			return 0;
+		}
 	}
 	
 	public Texture getMapTexture(int i, int j){
-		return MapImageLoader.blockTexture[mapblock[i][j]-1];
+		if(mapblock[i][j].getnum() != -1){
+			return MapImageLoader.blockTexture[mapblock[i][j].getTexture()];
+		}else{
+			return null;
+		}
+		
 	}
 	
 	public void Inter(){
 		for(int i = 0; i < MainRoop.p.skill.length; i++){
+			if(MainRoop.p.skill[i] != null)
 			MainRoop.p.skill[i].destroy();
 		}
 	}

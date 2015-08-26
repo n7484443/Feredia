@@ -4,12 +4,12 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 
 import map.Map;
+import map.Tiles;
 import core.MainRoop;
 
 public class RenderMap {
 
 	public static void Init() {
-
 	}
 
 	public synchronized static void update() {
@@ -32,19 +32,18 @@ public class RenderMap {
 			}
 			for (int i = 0; i < m.width / 32; i++) {
 				for (int j = 0; j < m.height / 32; j++) {
-					if (m.mapblock[i][j] != 0) {
+					if (m.mapblock[i][j] != Tiles.air && m.mapblock[i][j] != null && m.mapblock[i][j].getTexture() != -1) {
 						m.getMapTexture(i, j).bind();
+						int num = m.mapblock[i][j].getnum();
 						GL11.glBegin(GL11.GL_QUADS);
-						GL11.glTexCoord2f(0, 0);
+						GL11.glTexCoord2f((float)num * 32/m.getMapTexture(i, j).getImageWidth(), 0);
 						GL11.glVertex2f(i * 32, j * 32);
-						GL11.glTexCoord2f(0, 1);
+						GL11.glTexCoord2f((float)num * 32/m.getMapTexture(i, j).getImageWidth(), 1);
 						GL11.glVertex2f(i * 32, (j + 1) * 32);
-						GL11.glTexCoord2f(1, 1);
-						GL11.glVertex2f(i * 32 + m.getMapTextureXSize(i, j),
-								(j + 1) * 32);
-						GL11.glTexCoord2f(1, 0);
-						GL11.glVertex2f(i * 32 + m.getMapTextureXSize(i, j),
-								j * 32);
+						GL11.glTexCoord2f((float)(num + 1)* 32/m.getMapTexture(i, j).getImageWidth(), 1);
+						GL11.glVertex2f(i * 32 + 32, (j + 1) * 32);
+						GL11.glTexCoord2f((float)(num + 1)* 32/m.getMapTexture(i, j).getImageWidth(), 0);
+						GL11.glVertex2f(i * 32 + 32, j * 32);
 						GL11.glEnd();
 					}
 				}
