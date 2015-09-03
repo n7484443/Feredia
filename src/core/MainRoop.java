@@ -1,15 +1,18 @@
 package core;
 
 import java.io.IOException;
+
 import image.loader.MainImageLoader;
 import item.Items;
 import listener.GameListener;
 import map.Maps;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
+
 import player.PlayerInfo;
 import player.Slot;
 import render.RenderMain;
@@ -51,7 +54,7 @@ public class MainRoop {
 		Maps.Init();
 		Items.Init();
 		Skills_Mage.Init();
-		p = new PlayerInfo(1, 100, 100, 0, 1100, 730, "플레이어", "초보자");
+		p = new PlayerInfo(1, 100, 100, 0, 0, 730, "플레이어", "초보자");
 		p.sethp(100);
 		p.setmp(100);
 		p.setMap(Maps.tutorial_0);

@@ -1,5 +1,6 @@
 package player;
 
+import question.QuestFlag;
 import skill.Skill;
 import npc.NpcBase;
 import collision.CollisionBox;
@@ -7,6 +8,9 @@ import core.MainRoop;
 import map.Map;
 
 public class PlayerInfo {
+	
+	public QuestFlag quest;
+	
 	public int level;
 	public int maxhp;
 	public int maxmp;
@@ -59,6 +63,8 @@ public class PlayerInfo {
 		this.collisionBox = new CollisionBox(x, y, w, h);
 		npc = null;
 		skill = new Skill[20];
+		quest = new QuestFlag();
+		quest.Init();
 	}
 
 	public void jump() {

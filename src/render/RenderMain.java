@@ -118,8 +118,8 @@ public class RenderMain extends Thread {
 		}
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
 		if (!MainRoop.p.moveable && MainRoop.p.npc != null) {
-			for (int i = 0; i < MainRoop.p.npc.npcTalk[MainRoop.p.npc.showedNpcTalk].Dialogue.length; i++) {
-				FontRenderer.render(110,360 + i * 30, MainRoop.p.npc.npcTalk[MainRoop.p.npc.showedNpcTalk].Dialogue[i]);
+			for (int i = 0; i < MainRoop.p.npc.getNpcTalk().Dialogue.length; i++) {
+				FontRenderer.render(110,360 + i * 30, MainRoop.p.npc.getNpcTalk().Dialogue[i]);
 			}
 		}
 

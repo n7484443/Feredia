@@ -2,10 +2,11 @@ package npc;
 
 import org.newdawn.slick.opengl.Texture;
 
+import core.MainRoop;
 import image.loader.NpcImageLoader;
 import collision.CollisionBox;
 
-public class NpcBase {
+public abstract class NpcBase implements NpcNeed{
 	public int x;
 	public int y;
 	public int width;
@@ -43,5 +44,19 @@ public class NpcBase {
 	
 	public Texture getTexture(){
 		return NpcImageLoader.NpcTexture[texture];
+	}
+	
+	public void TalkCheck(){
+		MainRoop.p.npc.showedNpcTalk++;
+		if (showedNpcTalk >= showedNpcTalkMax) {
+			showedNpcTalk = 0;
+			MainRoop.p.npc = null;
+			MainRoop.p.moveable = true;
+			End();
+		}
+	}
+	
+	public StringNpc getNpcTalk(){
+		return this.npcTalk[MainRoop.p.npc.showedNpcTalk];
 	}
 }

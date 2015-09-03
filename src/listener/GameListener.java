@@ -179,16 +179,12 @@ public class GameListener {
 					if (MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.collisionBox)){
 						MainRoop.p.moveable = false;
 						MainRoop.p.npc = MainRoop.p.getMap().npc[i];
+						MainRoop.p.npc.First();
 						break;
 					}
 				}
 			} else {
-				MainRoop.p.npc.showedNpcTalk++;
-				if (MainRoop.p.npc.showedNpcTalk >= MainRoop.p.npc.showedNpcTalkMax) {
-					MainRoop.p.npc.showedNpcTalk = 0;
-					MainRoop.p.npc = null;
-					MainRoop.p.moveable = true;
-				}
+				MainRoop.p.npc.First();
 			}
 		} else if (Key == Keyboard.KEY_I) {
 			RenderDataBase.reverse(Gui.ItemSlot);
