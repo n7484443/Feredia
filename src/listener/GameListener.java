@@ -179,7 +179,7 @@ public class GameListener {
 					if (MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.collisionBox)){
 						MainRoop.p.moveable = false;
 						MainRoop.p.npc = MainRoop.p.getMap().npc[i];
-						MainRoop.p.npc.First();
+						MainRoop.p.npc.TalkFirst();
 						break;
 					}
 				}

@@ -1,7 +1,7 @@
 package npc;
 
 import org.newdawn.slick.opengl.Texture;
-
+import base.Strings;
 import core.MainRoop;
 import image.loader.NpcImageLoader;
 import collision.CollisionBox;
@@ -12,7 +12,7 @@ public abstract class NpcBase implements NpcNeed{
 	public int width;
 	public int height;
 	
-	public StringNpc[] npcTalk;
+	public Strings[] npcTalk;
 	
 	public int showedNpcTalk;
 	public int showedNpcTalkMax;
@@ -21,7 +21,7 @@ public abstract class NpcBase implements NpcNeed{
 	
 	public int texture;
 	
-	public NpcBase(int x, int y, int width, int height, int texture, StringNpc... npcTalk){
+	public NpcBase(int x, int y, int width, int height, int texture, Strings... npcTalk){
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -46,6 +46,10 @@ public abstract class NpcBase implements NpcNeed{
 		return NpcImageLoader.NpcTexture[texture];
 	}
 	
+	public void TalkFirst(){
+		
+	}
+	
 	public void TalkCheck(){
 		MainRoop.p.npc.showedNpcTalk++;
 		if (showedNpcTalk >= showedNpcTalkMax) {
@@ -56,7 +60,7 @@ public abstract class NpcBase implements NpcNeed{
 		}
 	}
 	
-	public StringNpc getNpcTalk(){
+	public Strings getNpcTalk(){
 		return this.npcTalk[MainRoop.p.npc.showedNpcTalk];
 	}
 }

@@ -1,6 +1,8 @@
 package npc;
 
-public class QuestionNpc extends StringNpc{
+import base.Strings;
+
+public class QuestionNpc extends Strings{
 	public QuestionNpc(String... Str){
 		super(Str);
 	}

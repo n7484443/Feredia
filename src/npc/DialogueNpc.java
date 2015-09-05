@@ -1,6 +1,8 @@
 package npc;
 
-public class DialogueNpc extends StringNpc{
+import base.Strings;
+
+public class DialogueNpc extends Strings{
 	public DialogueNpc(String... str){
 		super(str);
 	}
