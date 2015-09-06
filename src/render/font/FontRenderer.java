@@ -103,10 +103,10 @@ public class FontRenderer {
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 	
-	public synchronized static void renderReSizeable(int x1, int y1, int wsize, String str){
+	public synchronized static void renderReSizeable(int x1, int y1, int size, String str, float Alpha){
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		Color.white.bind();
+		float m = (float)size / 20;
 		for(int i = 0; i < str.length(); i++){
 			int fontx = x.get((int)str.charAt(i));
 			int fonty = y.get((int)str.charAt(i));
@@ -115,35 +115,7 @@ public class FontRenderer {
 			float texx2 = (fontx+fontwidth)/2048F;
 			float texy1 = fonty/2048F;
 			float texy2 = (fonty+koreanheight)/2048F;
-			int he = koreanheight*wsize/fontwidth;
-			GL11.glColor4f(1.0f,1.0f,1.0f,0.5f); 
-			GL11.glBegin(GL11.GL_QUADS);
-				GL11.glTexCoord2d(texx1, texy1);
-				GL11.glVertex2f(x1, y1);
-				GL11.glTexCoord2d(texx1, texy2);
-				GL11.glVertex2f(x1, y1+he);
-				GL11.glTexCoord2d(texx2, texy2);
-	 			GL11.glVertex2f(x1+wsize, y1+he);
-	 			GL11.glTexCoord2d(texx2, texy1);
-	 			GL11.glVertex2f(x1+wsize, y1);
-			GL11.glEnd();
-			x1 += wsize;
-		}
-		GL11.glDisable(GL11.GL_BLEND);
-	}
-	
-	public synchronized static void renderReSizeableWithColor(int x1, int y1, int wsize, String str, float Alpha){
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		for(int i = 0; i < str.length(); i++){
-			int fontx = x.get((int)str.charAt(i));
-			int fonty = y.get((int)str.charAt(i));
-			int fontwidth = width.get((int)str.charAt(i));
-			float texx1 = fontx/2048F;
-			float texx2 = (fontx+fontwidth)/2048F;
-			float texy1 = fonty/2048F;
-			float texy2 = (fonty+koreanheight)/2048F;
-			int he = koreanheight*wsize/fontwidth;
+			int he = (int) (koreanheight*m);
 			GL11.glColor4f(1.0f,1.0f,1.0f,Alpha); 
 			GL11.glBegin(GL11.GL_QUADS);
 				GL11.glTexCoord2d(texx1, texy1);
@@ -151,11 +123,11 @@ public class FontRenderer {
 				GL11.glTexCoord2d(texx1, texy2);
 				GL11.glVertex2f(x1, y1+he);
 				GL11.glTexCoord2d(texx2, texy2);
-	 			GL11.glVertex2f(x1+wsize, y1+he);
+	 			GL11.glVertex2f(x1+fontwidth*m, y1+he);
 	 			GL11.glTexCoord2d(texx2, texy1);
-	 			GL11.glVertex2f(x1+wsize, y1);
+	 			GL11.glVertex2f(x1+fontwidth*m, y1);
 			GL11.glEnd();
-			x1 += wsize;
+			x1 += fontwidth*m;
 		}
 		GL11.glDisable(GL11.GL_BLEND);
 	}

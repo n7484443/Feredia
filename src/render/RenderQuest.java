@@ -11,7 +11,7 @@ import collision.CollisionBox;
 import render.font.FontRenderer;
 import skill.SkillSlot;
 
-public class RenderSkill extends GuiBase{	
+public class RenderQuest extends GuiBase{	
 	public static SkillSlot[] s;
 	public static int x;
 	public static int y;
@@ -44,7 +44,7 @@ public class RenderSkill extends GuiBase{
 			
 		}
 		FontRenderer.kor_black.bind();
-		FontRenderer.renderReSizeable(x, y, 8, "스킬 창", 1.0f);
+		FontRenderer.renderReSizeable(x, y, 8, "퀘스트 창", 1.0f);
 		
 		GL11.glDisable(GL11.GL_BLEND);
 	}
@@ -65,11 +65,11 @@ public class RenderSkill extends GuiBase{
 		y = beforey + (int)Dy;
 	}
 	
-	public RenderSkill() throws IOException{
+	public RenderQuest() throws IOException{
 		x = 0;
 		y = 0;
 		s = new SkillSlot[5];
-		gui = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/gui/skill_gui.png"));
+		gui = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/gui/quest_gui.png"));
 		DragCollisionBox = new CollisionBox(x, y, 243, 11);
 		DeleteCollisionBox = new CollisionBox(x + 244, y, 12, 12);
 	}

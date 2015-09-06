@@ -19,6 +19,7 @@ public class RenderMain extends Thread {
 	public static Iterator<RenderUnit> iterator;
 	public static RenderItemSlot itemslot;
 	public static RenderSkill skillslot;
+	public static RenderQuest questslot;
 	public static RenderSkill_Mage_MakingMagic mage_Making;
 	public static RenderMiniMap minimap;
 	@Override
@@ -39,6 +40,7 @@ public class RenderMain extends Thread {
 		skillslot = new RenderSkill();
 		mage_Making = new RenderSkill_Mage_MakingMagic();
 		minimap = new RenderMiniMap();
+		questslot = new RenderQuest();
 		RenderMap.Init();
 	}
 
@@ -136,6 +138,10 @@ public class RenderMain extends Thread {
 		
 		if (RenderDataBase.OpenGui.contains(Gui.SkillSlot)) {
 			skillslot.render();
+		}
+		
+		if (RenderDataBase.OpenGui.contains(Gui.QuestSlot)) {
+			questslot.render();
 		}
 
 		iterator = list.iterator();

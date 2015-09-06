@@ -24,13 +24,13 @@ public class MapImageLoader {
 		
 		decoTexture[0] = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/map/deco/deco_grass.png"));
 		
-		blockColor[0] = Color.darkGray;
-		blockColor[1] = Color.darkGray;
-		blockColor[2] = Color.darkGray;
-		blockColor[3] = Color.darkGray;
-		blockColor[4] = Color.darkGray;
-		blockColor[5] = Color.darkGray;
-		blockColor[6] = Color.darkGray;
+		blockColor[0] = new Color(Color.black.r, Color.black.g, Color.black.b, .6f);
+		blockColor[1] = new Color(Color.black.r, Color.black.g, Color.black.b, .6f);
+		blockColor[2] = new Color(Color.black.r, Color.black.g, Color.black.b, .6f);
+		blockColor[3] = new Color(Color.black.r, Color.black.g, Color.black.b, .6f);
+		blockColor[4] = new Color(Color.black.r, Color.black.g, Color.black.b, .6f);
+		blockColor[5] = new Color(Color.black.r, Color.black.g, Color.black.b, .6f);
+		blockColor[6] = new Color(Color.black.r, Color.black.g, Color.black.b, .6f);
 		
 		blockTexturexSize[0] = 64;
 		blockTexturexSize[1] = 32;

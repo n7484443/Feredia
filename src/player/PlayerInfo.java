@@ -45,6 +45,8 @@ public class PlayerInfo {
 	public CollisionBox collisionBox;
 	
 	public Skill[] skill;
+	
+	public PlayerItemSlot itemSlot;
 
 	public PlayerInfo(int level, int hp, int mp, int exp, int x, int y,
 			String name, String job) {
@@ -64,7 +66,7 @@ public class PlayerInfo {
 		npc = null;
 		skill = new Skill[20];
 		quest = new QuestFlag();
-		quest.Init();
+		itemSlot = new PlayerItemSlot();
 	}
 
 	public void jump() {

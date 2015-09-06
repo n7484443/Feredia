@@ -46,11 +46,11 @@ public abstract class NpcBase implements NpcNeed{
 		return NpcImageLoader.NpcTexture[texture];
 	}
 	
-	public void TalkFirst(){
+	public void CheckFirst(){
 		
 	}
 	
-	public void TalkCheck(){
+	public void Talk(){
 		MainRoop.p.npc.showedNpcTalk++;
 		if (showedNpcTalk >= showedNpcTalkMax) {
 			showedNpcTalk = 0;

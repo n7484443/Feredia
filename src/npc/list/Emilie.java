@@ -18,16 +18,16 @@ public class Emilie extends NpcBase{
 		MainRoop.p.quest.setOnFlag(0, 0);
 	}
 	
-	public void First(){
-		if(!MainRoop.p.quest.getFlag(0, 0)){
-			Talk();
-		}else{
-			MainRoop.p.npc = null;
-			MainRoop.p.moveable = true;
-		}
+	public boolean Check(){
+		return !MainRoop.p.quest.getFlag(0, 0);
 	}
 	
-	public void Talk(){
-		TalkCheck();
+	public void CheckFirst(){
+		if(!Check()){
+			showedNpcTalk = 0;
+			MainRoop.p.npc = null;
+			MainRoop.p.moveable = true;
+			End();
+		}
 	}
 }

@@ -11,6 +11,8 @@ public class CircuitMain extends Thread {
 
 	private synchronized void init() {
 		RenderDataBase.Init();
+		MainRoop.p.quest.Init();
+		MainRoop.p.itemSlot.Init();
 	}
 
 	public synchronized void update() {

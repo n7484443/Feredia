@@ -23,7 +23,7 @@ public class MainRoop {
 	
 	public final static boolean Debug = false;
 	
-	public static enum Gui {none, ItemSlot, SkillSlot, MiniMap, SkillMageMakingMagicSlot}
+	public static enum Gui {none, ItemSlot, SkillSlot, QuestSlot, MiniMap, SkillMageMakingMagicSlot}
 	
 	public static boolean Gamerun = true;
 	public static int roop;

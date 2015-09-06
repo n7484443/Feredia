@@ -41,7 +41,7 @@ public class RenderSkill_Mage_MakingMagic extends GuiBase{
 		GL11.glEnd();
 
 		FontRenderer.kor_white.bind();
-		FontRenderer.renderReSizeableWithColor(x, y, 10, "스킬 제작 창", 1.0f);
+		FontRenderer.renderReSizeable(x, y, 8, "스킬 제작 창", 1.0f);
 		
 		GL11.glDisable(GL11.GL_BLEND);
 	}

@@ -22,6 +22,9 @@ public class GameListener {
 	public static Key Key_A;
 	public static Key Key_D;
 	public static Key Key_W;
+	public static Key Key_Right;
+	public static Key Key_Left;
+	public static Key Key_Up;
 	public static Key Key_Q;
 	public static Key Key_I;
 	public static Key Key_K;
@@ -44,6 +47,9 @@ public class GameListener {
 		Key_A = new Key(Keyboard.KEY_A);
 		Key_D = new Key(Keyboard.KEY_D);
 		Key_W = new Key(Keyboard.KEY_W);
+		Key_Left = new Key(Keyboard.KEY_LEFT);
+		Key_Right = new Key(Keyboard.KEY_RIGHT);
+		Key_Up = new Key(Keyboard.KEY_UP);
 		Key_Q = new Key(Keyboard.KEY_Q);
 		Key_I = new Key(Keyboard.KEY_I);
 		Key_K = new Key(Keyboard.KEY_K);
@@ -105,6 +111,8 @@ public class GameListener {
 					RenderMain.skillslot.MoveBefore();
 					RenderMain.itemslot.MoveBefore();
 					RenderMain.minimap.MoveBefore();
+					RenderMain.questslot.MoveBefore();
+				} else if (Mouse.getEventButton() == 1){
 				}
 			}
 		}
@@ -130,6 +138,11 @@ public class GameListener {
 						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none && Mouse.getEventButtonState()) || ClickedSet == Gui.ItemSlot)) {
 			RenderMain.itemslot.Move(x, y);
 			ClickedSet = Gui.ItemSlot;
+		} else if (RenderDataBase.OpenGui.contains(Gui.QuestSlot)
+				&& ((RenderMain.questslot.CheckDragCollisionBox(Mouse.getX(),
+						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none && Mouse.getEventButtonState()) || ClickedSet == Gui.QuestSlot)) {
+			RenderMain.questslot.Move(x, y);
+			ClickedSet = Gui.QuestSlot;
 		} else if (RenderDataBase.OpenGui.contains(Gui.MiniMap)
 				&& ((RenderMain.minimap.CheckDragCollisionBox(Mouse.getX(),
 						Display.getHeight() - Mouse.getY()) && ClickedSet == Gui.none && Mouse.getEventButtonState()) || ClickedSet == Gui.MiniMap)) {
@@ -157,42 +170,48 @@ public class GameListener {
 	}
 
 	public static void DoubleClickEvent(int x, int y) {
-		if (RenderDataBase.OpenGui.contains(Gui.ItemSlot))
+		if (RenderDataBase.OpenGui.contains(Gui.ItemSlot)){
 			RenderItemSlot.ItemStackEvent(x, Display.getHeight() - y);
+		}
 	}
 
 	public static void PressedEvent(int Key) {
-		if (Key == Keyboard.KEY_W) {
-			for (int i = 0; i < MainRoop.p.getMap().portal.length; i++) {
-				if (MainRoop.p.getMap().portal[i].CheckCollision(MainRoop.p.collisionBox)) {
-					MainRoop.p.getMap().portal[i].PlayerMoveMap();
-					break;
+		if (Key == Keyboard.KEY_UP) {
+			boolean b = false;
+			if(MainRoop.p.getMap().portal != null){
+				for (int i = 0; i < MainRoop.p.getMap().portal.length; i++) {
+					if (MainRoop.p.getMap().portal[i].CheckCollision(MainRoop.p.collisionBox)) {
+						MainRoop.p.getMap().portal[i].PlayerMoveMap();
+						b = true;
+						break;
+					}
 				}
+			}
+			if (MainRoop.p.moveable && MainRoop.p.getMap().npc != null && !b) {
+				for (int i = 0; i < MainRoop.p.getMap().npc.length; i++) {
+					if (MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.collisionBox)){
+						MainRoop.p.moveable = false;
+						MainRoop.p.npc = MainRoop.p.getMap().npc[i];
+						MainRoop.p.npc.CheckFirst();
+						break;
+					}
+				}
+			} else if(!b){
+				MainRoop.p.npc.Talk();
 			}
 		}
 	}
 
 	public static void RealeasedEvent(int Key) throws IOException {
-		if (Key == Keyboard.KEY_Q && MainRoop.p.getMap().npc != null) {
-			if (MainRoop.p.moveable) {
-				for (int i = 0; i < MainRoop.p.getMap().npc.length; i++) {
-					if (MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.collisionBox)){
-						MainRoop.p.moveable = false;
-						MainRoop.p.npc = MainRoop.p.getMap().npc[i];
-						MainRoop.p.npc.TalkFirst();
-						break;
-					}
-				}
-			} else {
-				MainRoop.p.npc.First();
-			}
-		} else if (Key == Keyboard.KEY_I) {
+		if (Key == Keyboard.KEY_I) {
 			RenderDataBase.reverse(Gui.ItemSlot);
 		} else if (Key == Keyboard.KEY_K) {
 			RenderDataBase.reverse(Gui.SkillSlot);
-		} else if (Key == Keyboard.KEY_J) {
-			RenderDataBase.reverse(Gui.MiniMap);
 		} else if (Key == Keyboard.KEY_M) {
+			RenderDataBase.reverse(Gui.MiniMap);
+		} else if (Key == Keyboard.KEY_Q) {
+			RenderDataBase.reverse(Gui.QuestSlot);
+		} else if (Key == Keyboard.KEY_J) {
 			RenderDataBase.reverse(Gui.SkillMageMakingMagicSlot);
 		} else if (Key == Keyboard.KEY_Z) {
 			if (MainRoop.p.mp >= 10) {
@@ -218,10 +237,10 @@ public class GameListener {
 
 	public static void HoldingEvent() {
 		if (MainRoop.p.getMap() != null && MainRoop.p.moveable) {
-			if (Key_D.state) {
+			if (Key_Right.state) {
 				MainRoop.p.moveX(4);
 			}
-			if (Key_A.state) {
+			if (Key_Left.state) {
 				MainRoop.p.moveX(-4);
 			}
 			if (Key_Space.state) {
@@ -241,6 +260,15 @@ public class GameListener {
 				break;
 			case Keyboard.KEY_W:
 				Key_W.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_RIGHT:
+				Key_Right.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_LEFT:
+				Key_Left.setEvent(Keyboard.getEventKeyState());
+				break;
+			case Keyboard.KEY_UP:
+				Key_Up.setEvent(Keyboard.getEventKeyState());
 				break;
 			case Keyboard.KEY_Q:
 				Key_Q.setEvent(Keyboard.getEventKeyState());
