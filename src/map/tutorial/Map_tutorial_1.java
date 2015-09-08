@@ -15,7 +15,7 @@ import collision.CollisionBox;
 
 public class Map_tutorial_1 extends Map{
 	public Map_tutorial_1() throws IOException{
-		name = "튜토리얼 둘째";
+		name = "튜토리얼 2";
 		BackGround = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/map/background/background.png"));
 	}
 	

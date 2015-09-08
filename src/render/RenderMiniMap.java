@@ -21,6 +21,7 @@ public class RenderMiniMap extends GuiBase{
 	public static final int showper = 10; 
 	public Color playerColor;
 	public Color npcColor;
+	public Color portalColor;
 	 
 	public void render() { 
 		GL11.glDisable(GL11.GL_TEXTURE_2D); 
@@ -39,13 +40,6 @@ public class RenderMiniMap extends GuiBase{
 				}
 			}
 		}
-		playerColor.bind();
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glVertex2f(x + Math.round(MainRoop.p.getX()/32*showper), y + Math.round(MainRoop.p.getY()/32*showper));
-		GL11.glVertex2f(x + Math.round((MainRoop.p.getX()/32+1)*showper), y + Math.round(MainRoop.p.getY()/32*showper));
-		GL11.glVertex2f(x + Math.round((MainRoop.p.getX()/32+1)*showper), y + Math.round((MainRoop.p.getY()/32+1)*showper));
-		GL11.glVertex2f(x + Math.round(MainRoop.p.getX()/32*showper), y + Math.round((MainRoop.p.getY()/32+1)*showper));
-		GL11.glEnd();
 		
 		if(MainRoop.p.getMap().npc != null){
 			for(int i = 0; i < MainRoop.p.getMap().npc.length; i++){
@@ -53,11 +47,32 @@ public class RenderMiniMap extends GuiBase{
 				GL11.glBegin(GL11.GL_QUADS);
 				GL11.glVertex2f(x + Math.round(MainRoop.p.getMap().npc[i].x/32*showper), y + Math.round(MainRoop.p.getMap().npc[i].y/32*showper));
 				GL11.glVertex2f(x + Math.round((MainRoop.p.getMap().npc[i].x/32+1)*showper), y + Math.round(MainRoop.p.getMap().npc[i].y/32*showper));
-				GL11.glVertex2f(x + Math.round((MainRoop.p.getMap().npc[i].x/32+1)*showper), y + Math.round((MainRoop.p.getMap().npc[i].y/32+1)*showper));
-				GL11.glVertex2f(x + Math.round(MainRoop.p.getMap().npc[i].x/32*showper), y + Math.round((MainRoop.p.getMap().npc[i].y/32+1)*showper));
+				GL11.glVertex2f(x + Math.round((MainRoop.p.getMap().npc[i].x/32+1)*showper), y + Math.round((MainRoop.p.getMap().npc[i].y + MainRoop.p.getMap().npc[i].height)/32*showper));
+				GL11.glVertex2f(x + Math.round(MainRoop.p.getMap().npc[i].x/32*showper), y + Math.round((MainRoop.p.getMap().npc[i].y + MainRoop.p.getMap().npc[i].height)/32*showper));
 				GL11.glEnd();
 			}
 		}
+		
+		if(MainRoop.p.getMap().portal != null){
+			for(int i = 0; i < MainRoop.p.getMap().portal.length; i++){
+				portalColor.bind();
+				GL11.glBegin(GL11.GL_QUADS);
+				GL11.glVertex2f(x + Math.round(MainRoop.p.getMap().portal[i].x/32*showper), y + Math.round(MainRoop.p.getMap().portal[i].y/32*showper));
+				GL11.glVertex2f(x + Math.round((MainRoop.p.getMap().portal[i].x/32+1)*showper), y + Math.round(MainRoop.p.getMap().portal[i].y/32*showper));
+				GL11.glVertex2f(x + Math.round((MainRoop.p.getMap().portal[i].x/32+1)*showper), y + Math.round((MainRoop.p.getMap().portal[i].y/32+1)*showper));
+				GL11.glVertex2f(x + Math.round(MainRoop.p.getMap().portal[i].x/32*showper), y + Math.round((MainRoop.p.getMap().portal[i].y/32+1)*showper));
+				GL11.glEnd();
+			}
+		}
+		
+
+		playerColor.bind();
+		GL11.glBegin(GL11.GL_QUADS);
+		GL11.glVertex2f(x + Math.round(MainRoop.p.getX()/32*showper), y + Math.round(MainRoop.p.getY()/32*showper));
+		GL11.glVertex2f(x + Math.round((MainRoop.p.getX()/32+1)*showper), y + Math.round(MainRoop.p.getY()/32*showper));
+		GL11.glVertex2f(x + Math.round((MainRoop.p.getX()/32+1)*showper), y + Math.round((MainRoop.p.getY()/32+1)*showper));
+		GL11.glVertex2f(x + Math.round(MainRoop.p.getX()/32*showper), y + Math.round((MainRoop.p.getY()/32+1)*showper));
+		GL11.glEnd();
 		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		FontRenderer.kor_black.bind();
@@ -89,5 +104,6 @@ public class RenderMiniMap extends GuiBase{
 		DeleteCollisionBox = new CollisionBox(x + 434, y, 12, 12);
 		playerColor = new Color(Color.blue.r, Color.blue.g, Color.blue.b, .6f);
 		npcColor = new Color(Color.red.r, Color.red.g, Color.red.b, .6f);
+		portalColor = new Color(Color.green.r, Color.green.g, Color.green.b, .6f);
 	}
 }

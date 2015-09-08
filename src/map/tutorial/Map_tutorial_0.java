@@ -21,7 +21,7 @@ public class Map_tutorial_0 extends Map {
 	// width:40, height:30
 
 	public Map_tutorial_0() throws IOException {
-		name = "튜토리얼 첫째";
+		name = "튜토리얼 1";
 		BackGround = TextureLoader.getTexture("png", ResourceLoader
 				.getResourceAsStream("image/map/background/background.png"));
 	}
