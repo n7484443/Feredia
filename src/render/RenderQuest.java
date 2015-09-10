@@ -7,12 +7,11 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import core.MainRoop;
 import collision.CollisionBox;
 import render.font.FontRenderer;
-import skill.SkillSlot;
 
-public class RenderQuest extends GuiBase{	
-	public static SkillSlot[] s;
+public class RenderQuest extends GuiBase{
 	public static int x;
 	public static int y;
 	public static int beforex;
@@ -21,6 +20,8 @@ public class RenderQuest extends GuiBase{
 	public static int beforeCollisiony;
 	public static int showx;
 	public static int showy;
+	
+	public static int showedslot;
 	
 	public static Texture gui;
 	
@@ -45,6 +46,9 @@ public class RenderQuest extends GuiBase{
 		}
 		FontRenderer.kor_black.bind();
 		FontRenderer.renderReSizeable(x, y, 8, "퀘스트 창", 1.0f);
+		FontRenderer.renderReSizeable(x + 30, 11 + y + 3, 12, String.valueOf(MainRoop.p.questSlot.getSlotName(0)), 1.0f);
+		FontRenderer.renderReSizeable(x + 85 + 30, 11 + y + 3, 12, String.valueOf(MainRoop.p.questSlot.getSlotName(1)), 1.0f);
+		FontRenderer.renderReSizeable(x + 170 + 30, 11 + y + 3, 12, String.valueOf(MainRoop.p.questSlot.getSlotName(2)), 1.0f);
 		
 		GL11.glDisable(GL11.GL_BLEND);
 	}
@@ -68,7 +72,7 @@ public class RenderQuest extends GuiBase{
 	public RenderQuest() throws IOException{
 		x = 0;
 		y = 0;
-		s = new SkillSlot[5];
+		showedslot = 1;
 		gui = TextureLoader.getTexture("png", ResourceLoader.getResourceAsStream("image/gui/quest_gui.png"));
 		DragCollisionBox = new CollisionBox(x, y, 243, 11);
 		DeleteCollisionBox = new CollisionBox(x + 244, y, 12, 12);

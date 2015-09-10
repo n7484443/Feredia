@@ -64,16 +64,16 @@ public class RenderItemSlot extends GuiBase{
 					GL11.glEnd();
 					FontRenderer.kor_black.bind();
 					FontRenderer.renderReSizeable(i * 32 + x, j * 32 + 37 + y, 9, String.valueOf(MainRoop.p.itemSlot.getSlot(showedslot)[i + j*4].itemStack.StackSize), 1.0f);
-					FontRenderer.renderReSizeable(x, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(0)), 1.0f);
-					FontRenderer.renderReSizeable(x + 51 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(1)), 1.0f);
-					FontRenderer.renderReSizeable(x + 102 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(2)), 1.0f);
-					FontRenderer.renderReSizeable(x + 153 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(3)), 1.0f);
-					FontRenderer.renderReSizeable(x + 204 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(4)), 1.0f);
 				}
 			}
 		}
 		FontRenderer.kor_black.bind();
 		FontRenderer.renderReSizeable(x, y, 8, "아이템 창", 1.0f);
+		FontRenderer.renderReSizeable(x, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(0)), 1.0f);
+		FontRenderer.renderReSizeable(x + 51 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(1)), 1.0f);
+		FontRenderer.renderReSizeable(x + 102 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(2)), 1.0f);
+		FontRenderer.renderReSizeable(x + 153 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(3)), 1.0f);
+		FontRenderer.renderReSizeable(x + 204 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(4)), 1.0f);
 
 		GL11.glDisable(GL11.GL_BLEND);
 		

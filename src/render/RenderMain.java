@@ -112,12 +112,7 @@ public class RenderMain extends Thread {
 		FontRenderer.render(10, 960 - 60, MainRoop.p.name);
 		FontRenderer.render(10, 960 - 30, "Level " + MainRoop.p.level);
 		FontRenderer.render(130, 960 - 60, MainRoop.p.job);
-		if(MainRoop.Debug){
-			FontRenderer.render((int)MainRoop.p.getX(), (int)MainRoop.p.getY(), String.valueOf(MainRoop.p.getY()));
-			for(int i = 0; i < MainRoop.p.getMap().Collision.length; i++){
-				FontRenderer.render(MainRoop.p.getMap().Collision[i].x, MainRoop.p.getMap().Collision[i].y, String.valueOf(MainRoop.p.getMap().Collision[i].y));
-			}
-		}
+		
 		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
 		if (!MainRoop.p.moveable && MainRoop.p.npc != null) {
 			for (int i = 0; i < MainRoop.p.npc.getNpcTalk().Dialogue.length; i++) {
@@ -150,7 +145,16 @@ public class RenderMain extends Thread {
 			RU.firstdraw();
 		}
 		SkillRender();
-		
+
+		FontRenderer.kor_black.bind();
+		if(MainRoop.Debug){
+			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f);
+			FontRenderer.render((int)MainRoop.p.getX(), (int)MainRoop.p.getY(), String.valueOf(MainRoop.p.getY()));
+			FontRenderer.render(0, 0, String.valueOf(MainRoop.averageFps));
+			for(int i = 0; i < MainRoop.p.getMap().Collision.length; i++){
+				FontRenderer.render(MainRoop.p.getMap().Collision[i].x, MainRoop.p.getMap().Collision[i].y, String.valueOf(MainRoop.p.getMap().Collision[i].y));
+			}
+		}
 		
 		Display.update();
 	}

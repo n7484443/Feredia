@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import image.loader.MainImageLoader;
 import item.Items;
+import item.ItemSlot;
 import listener.GameListener;
 import map.Maps;
 
@@ -14,14 +15,13 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 
 import player.PlayerInfo;
-import player.Slot;
 import render.RenderMain;
 import render.font.FontRenderer;
 import skill.mage.Skills_Mage;
 
 public class MainRoop {
 	
-	public final static boolean Debug = false;
+	public final static boolean Debug = true;
 	
 	public static enum Gui {none, ItemSlot, SkillSlot, QuestSlot, MiniMap, SkillMageMakingMagicSlot}
 	
@@ -32,6 +32,9 @@ public class MainRoop {
 	public static PlayerInfo p;
 	
 	public static Texture bar;
+	
+	public static long fps;
+	public static long averageFps;
 	
 	public synchronized static void main(String[] args) throws Exception{
 		Init(1280, 960);
@@ -58,10 +61,11 @@ public class MainRoop {
 		p.sethp(100);
 		p.setmp(100);
 		p.setMap(Maps.tutorial_0);
-		Slot.Init();
+		ItemSlot.Init();
 		GameListener.Init();
 		CM.start();
 		RM.start();
+		fps = 1000;
 	}
 
 	public static void setDisplayAndGL(int width, int height)
@@ -108,7 +112,10 @@ public class MainRoop {
 				}
 			}
 			roop++;
-			if (roop % 20 == 0)System.out.println((50 - (after - before)) * 20);
+			if (roop % 20 == 0){
+				averageFps = (fps + (long)((35 - (after - before)) * 28.5)) / 2;
+				fps = (long) ((35 - (after - before)) * 28.5);
+			}
 		}
 	}
 

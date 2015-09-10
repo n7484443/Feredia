@@ -1,12 +1,11 @@
-package player;
-
-import item.ItemStack;
+package item;
 
 
-public class Slot {
+
+public class ItemSlot {
 	public ItemStack itemStack;
 	
-	public Slot(ItemStack i){
+	public ItemSlot(ItemStack i){
 		this.itemStack = i;
 	}
 	

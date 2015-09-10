@@ -1,29 +1,26 @@
-package player;
+package item;
 
-import item.ItemStack;
-import item.Items;
 
 public class PlayerItemSlot {
-	public Slot[] s;
-	public Slot[] s_equid;
-	public Slot[] s_use;
-	public Slot[] s_material;
-	public Slot[] s_weapon;
-	public Slot[] s_others;
+	public ItemSlot[] s_equid;
+	public ItemSlot[] s_use;
+	public ItemSlot[] s_material;
+	public ItemSlot[] s_weapon;
+	public ItemSlot[] s_others;
 	
 	
 	public void Init(){
-		s_equid = new Slot[5*4];
-		s_use = new Slot[5*4];
-		s_material = new Slot[5*4];
-		s_weapon = new Slot[5*4];
-		s_others = new Slot[5*4];
+		s_equid = new ItemSlot[5*4];
+		s_use = new ItemSlot[5*4];
+		s_material = new ItemSlot[5*4];
+		s_weapon = new ItemSlot[5*4];
+		s_others = new ItemSlot[5*4];
 
-		s_use[0] = new Slot(new ItemStack(2, Items.hp_potion_big));
-		s_use[1] = new Slot(new ItemStack(5, Items.mp_potion_big));
+		s_use[0] = new ItemSlot(new ItemStack(2, Items.hp_potion_big));
+		s_use[1] = new ItemSlot(new ItemStack(5, Items.mp_potion_big));
 	}
 	
-	public Slot[] getSlot(int i){
+	public ItemSlot[] getSlot(int i){
 		switch(i){
 		case 0:
 			return s_equid;

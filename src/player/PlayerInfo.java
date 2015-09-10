@@ -1,5 +1,7 @@
 package player;
 
+import item.PlayerItemSlot;
+import quest.PlayerQuestSlot;
 import question.QuestFlag;
 import skill.Skill;
 import npc.NpcBase;
@@ -47,6 +49,7 @@ public class PlayerInfo {
 	public Skill[] skill;
 	
 	public PlayerItemSlot itemSlot;
+	public PlayerQuestSlot questSlot;
 
 	public PlayerInfo(int level, int hp, int mp, int exp, int x, int y,
 			String name, String job) {
@@ -67,6 +70,7 @@ public class PlayerInfo {
 		skill = new Skill[20];
 		quest = new QuestFlag();
 		itemSlot = new PlayerItemSlot();
+		questSlot = new PlayerQuestSlot();
 	}
 
 	public void jump() {
