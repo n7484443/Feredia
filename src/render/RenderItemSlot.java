@@ -3,6 +3,7 @@ package render;
 import java.io.IOException;
 
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -26,54 +27,27 @@ public class RenderItemSlot extends GuiBase{
 	
 	public static Texture gui;
 	public void render() {
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.6f);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		gui.bind();
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glTexCoord2f(0, 0);
-		GL11.glVertex2f(x, y);
-		GL11.glTexCoord2f(gui.getWidth(), 0);
-		GL11.glVertex2f(x+256, y);
-		GL11.glTexCoord2f(gui.getWidth(), gui.getHeight());
-		GL11.glVertex2f(x+256, y+512);
-		GL11.glTexCoord2f(0, gui.getHeight());
-		GL11.glVertex2f(x, y+512);
-		GL11.glEnd();
-		
+		Render.RenderImageBoxColor(x, y, x+256, y+512, gui, new Color(1.0f, 1.0f, 1.0f, 0.6f));
 		GL11.glDisable(GL11.GL_BLEND);
+		
 		for(int i = 0; i < 4; i++){
 			for(int j = 0; j < 5; j++){
 				GL11.glEnable(GL11.GL_BLEND);
 				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-				GL11.glColor4f(1.f, 1.f, 1.f, 1.0f);
 				if(MainRoop.p.itemSlot.getSlot(showedslot)[i + j*4] != null && MainRoop.p.itemSlot.getSlot(showedslot)[i + j*4].itemStack.StackSize > 0){
-					MainRoop.p.itemSlot.getSlot(showedslot)[i + j*4].itemStack.i.getImage().bind();
-					GL11.glBegin(GL11.GL_QUADS);
-					GL11.glEnable(GL11.GL_BLEND);
-					GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-						GL11.glTexCoord2f(0, 0);
-						GL11.glVertex2f(i*32+5 + x, j*32+5 + 37 + y);
-						GL11.glTexCoord2f(0, 1);
-						GL11.glVertex2f(i*32+5 + x, (j+1)*32-5 + 37 + y);
-						GL11.glTexCoord2f(1, 1);
-						GL11.glVertex2f((i+1)*32-5 + x, (j+1)*32-5 + 37 + y);
-						GL11.glTexCoord2f(1, 0);
-						GL11.glVertex2f((i+1)*32-5 + x, j*32+5 + 37 + y);
-					GL11.glEnd();
-					FontRenderer.kor_black.bind();
-					FontRenderer.renderReSizeable(i * 32 + x, j * 32 + 37 + y, 9, String.valueOf(MainRoop.p.itemSlot.getSlot(showedslot)[i + j*4].itemStack.StackSize), 1.0f);
+					Render.RenderImageBox(i*32+5 + x, j*32+5 + 37 + y, (i+1)*32-5 + x, (j+1)*32-5 + 37 + y , MainRoop.p.itemSlot.getSlot(showedslot)[i + j*4].itemStack.i.getImage());
+					FontRenderer.renderReSizeable(i * 32 + x, j * 32 + 37 + y, 9, String.valueOf(MainRoop.p.itemSlot.getSlot(showedslot)[i + j*4].itemStack.StackSize), 1.f, 1);
 				}
 			}
 		}
-		FontRenderer.kor_black.bind();
-		FontRenderer.renderReSizeable(x, y, 8, "아이템 창", 1.0f);
-		FontRenderer.renderReSizeable(x, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(0)), 1.0f);
-		FontRenderer.renderReSizeable(x + 51 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(1)), 1.0f);
-		FontRenderer.renderReSizeable(x + 102 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(2)), 1.0f);
-		FontRenderer.renderReSizeable(x + 153 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(3)), 1.0f);
-		FontRenderer.renderReSizeable(x + 204 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(4)), 1.0f);
+		FontRenderer.renderReSizeable(x, y, 8, "아이템 창", 1.f, 1);
+		FontRenderer.renderReSizeable(x, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(0)), 1.f, 1);
+		FontRenderer.renderReSizeable(x + 51 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(1)), 1.f, 1);
+		FontRenderer.renderReSizeable(x + 102 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(2)), 1.f, 1);
+		FontRenderer.renderReSizeable(x + 153 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(3)), 1.f, 1);
+		FontRenderer.renderReSizeable(x + 204 + 10, 11 + y + 3, 12, String.valueOf(MainRoop.p.itemSlot.getSlotName(4)), 1.f, 1);
 
 		GL11.glDisable(GL11.GL_BLEND);
 		

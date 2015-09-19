@@ -70,7 +70,7 @@ public class Map_tutorial_0 extends Map {
 	public void Inter() {
 		super.Inter();
 		try {
-			RenderMain.list.add(new RenderUnit(140, 180,
+			RenderMain.list.add(new RenderUnit(110, 180,
 					"image/map/tutorial/space_bar.png", this));
 			RenderMain.list.add(new RenderUnit(200, 180,
 					"image/map/tutorial/left_bar.png", this));

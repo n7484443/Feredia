@@ -30,54 +30,29 @@ public class RenderMiniMap extends GuiBase{
 		for(int i = 0; i < MainRoop.p.getMap().width / 32; i++){ 
 			for(int j = 0; j < MainRoop.p.getMap().height / 32; j++){ 
 				if(MainRoop.p.getMap().mapblock[i][j].getTexture() != -1){ 
-					MainRoop.p.getMap().getColorMiniMap(MainRoop.p.getMap().mapblock[i][j].getTexture()).bind(); 
-					GL11.glBegin(GL11.GL_QUADS); 
-					GL11.glVertex2f(x + i*showper, y + j*showper); 
-					GL11.glVertex2f(x + (i+1)*showper, y + j*showper); 
-					GL11.glVertex2f(x + (i+1)*showper, y + (j+1)*showper);
-					GL11.glVertex2f(x + i*showper, y + (j+1)*showper); 
-					GL11.glEnd();
+					Render.RenderBox(x + i*showper, y + j*showper, x + (i+1)*showper, y + (j+1)*showper, MainRoop.p.getMap().getColorMiniMap(MainRoop.p.getMap().mapblock[i][j].getTexture()));
 				}
 			}
 		}
 		
 		if(MainRoop.p.getMap().npc != null){
 			for(int i = 0; i < MainRoop.p.getMap().npc.length; i++){
-				npcColor.bind();
-				GL11.glBegin(GL11.GL_QUADS);
-				GL11.glVertex2f(x + Math.round(MainRoop.p.getMap().npc[i].x/32*showper), y + Math.round(MainRoop.p.getMap().npc[i].y/32*showper));
-				GL11.glVertex2f(x + Math.round((MainRoop.p.getMap().npc[i].x/32+1)*showper), y + Math.round(MainRoop.p.getMap().npc[i].y/32*showper));
-				GL11.glVertex2f(x + Math.round((MainRoop.p.getMap().npc[i].x/32+1)*showper), y + Math.round((MainRoop.p.getMap().npc[i].y + MainRoop.p.getMap().npc[i].height)/32*showper));
-				GL11.glVertex2f(x + Math.round(MainRoop.p.getMap().npc[i].x/32*showper), y + Math.round((MainRoop.p.getMap().npc[i].y + MainRoop.p.getMap().npc[i].height)/32*showper));
-				GL11.glEnd();
+				Render.RenderBox(x + Math.round(MainRoop.p.getMap().npc[i].x/32*showper), y + Math.round(MainRoop.p.getMap().npc[i].y/32*showper),
+						x + Math.round((MainRoop.p.getMap().npc[i].x/32+1)*showper), y + Math.round((MainRoop.p.getMap().npc[i].y + MainRoop.p.getMap().npc[i].height)/32*showper),npcColor);
 			}
 		}
 		
 		if(MainRoop.p.getMap().portal != null){
 			for(int i = 0; i < MainRoop.p.getMap().portal.length; i++){
-				portalColor.bind();
-				GL11.glBegin(GL11.GL_QUADS);
-				GL11.glVertex2f(x + Math.round(MainRoop.p.getMap().portal[i].x/32*showper), y + Math.round(MainRoop.p.getMap().portal[i].y/32*showper));
-				GL11.glVertex2f(x + Math.round((MainRoop.p.getMap().portal[i].x/32+1)*showper), y + Math.round(MainRoop.p.getMap().portal[i].y/32*showper));
-				GL11.glVertex2f(x + Math.round((MainRoop.p.getMap().portal[i].x/32+1)*showper), y + Math.round((MainRoop.p.getMap().portal[i].y/32+1)*showper));
-				GL11.glVertex2f(x + Math.round(MainRoop.p.getMap().portal[i].x/32*showper), y + Math.round((MainRoop.p.getMap().portal[i].y/32+1)*showper));
-				GL11.glEnd();
+				Render.RenderBox(x + Math.round(MainRoop.p.getMap().portal[i].x/32*showper), y + Math.round(MainRoop.p.getMap().portal[i].y/32*showper),
+						x + Math.round((MainRoop.p.getMap().portal[i].x/32+1)*showper), y + Math.round((MainRoop.p.getMap().portal[i].y + MainRoop.p.getMap().portal[i].height)/32*showper),portalColor);
 			}
 		}
-		
-
-		playerColor.bind();
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glVertex2f(x + Math.round(MainRoop.p.getX()/32*showper), y + Math.round(MainRoop.p.getY()/32*showper));
-		GL11.glVertex2f(x + Math.round((MainRoop.p.getX()/32+1)*showper), y + Math.round(MainRoop.p.getY()/32*showper));
-		GL11.glVertex2f(x + Math.round((MainRoop.p.getX()/32+1)*showper), y + Math.round((MainRoop.p.getY()/32+1)*showper));
-		GL11.glVertex2f(x + Math.round(MainRoop.p.getX()/32*showper), y + Math.round((MainRoop.p.getY()/32+1)*showper));
-		GL11.glEnd();
+		Render.RenderBox(x + Math.round(MainRoop.p.getX()/32*showper), y + Math.round(MainRoop.p.getY()/32*showper), x + Math.round((MainRoop.p.getX()/32+1)*showper), y + Math.round((MainRoop.p.getY()/32+1)*showper), playerColor);
 		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		FontRenderer.kor_black.bind();
-		FontRenderer.renderReSizeable(x, y, 9, "미니 맵", 1.0f);
-		FontRenderer.renderReSizeable(x, y+11, 9, MainRoop.p.getMap().name, 1.0f);
+		FontRenderer.renderReSizeable(x, y, 9, "미니 맵", 1.f, 1);
+		FontRenderer.renderReSizeable(x, y+11, 9, MainRoop.p.getMap().name, 1.f, 1);
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 	
@@ -102,8 +77,8 @@ public class RenderMiniMap extends GuiBase{
 		y = 0;
 		DragCollisionBox = new CollisionBox(x, y, 434, 14);
 		DeleteCollisionBox = new CollisionBox(x + 434, y, 12, 12);
-		playerColor = new Color(Color.blue.r, Color.blue.g, Color.blue.b, .6f);
+		playerColor = new Color(Color.green.r, Color.green.g, Color.green.b, .6f);
 		npcColor = new Color(Color.red.r, Color.red.g, Color.red.b, .6f);
-		portalColor = new Color(Color.green.r, Color.green.g, Color.green.b, .6f);
+		portalColor = new Color(Color.blue.r, Color.blue.g, Color.blue.b, .6f);
 	}
 }

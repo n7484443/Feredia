@@ -187,17 +187,19 @@ public class GameListener {
 					}
 				}
 			}
-			if (MainRoop.p.moveable && MainRoop.p.getMap().npc != null && !b) {
-				for (int i = 0; i < MainRoop.p.getMap().npc.length; i++) {
-					if (MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.collisionBox)){
-						MainRoop.p.moveable = false;
-						MainRoop.p.npc = MainRoop.p.getMap().npc[i];
-						MainRoop.p.npc.CheckFirst();
-						break;
+			if(MainRoop.p.getMap().npc != null && !b){
+				if (MainRoop.p.moveable) {
+					for (int i = 0; i < MainRoop.p.getMap().npc.length; i++) {
+						if (MainRoop.p.getMap().npc[i].CheckCollision(MainRoop.p.collisionBox)){
+							MainRoop.p.moveable = false;
+							MainRoop.p.npc = MainRoop.p.getMap().npc[i];
+							MainRoop.p.npc.CheckFirst();
+							break;
+						}
 					}
+				} else{
+					MainRoop.p.npc.Talk();
 				}
-			} else if(!b){
-				MainRoop.p.npc.Talk();
 			}
 		}
 	}

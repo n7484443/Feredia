@@ -1,7 +1,9 @@
 package render;
 
 import java.io.IOException;
+
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -24,24 +26,11 @@ public class RenderSkill_Mage_MakingMagic extends GuiBase{
 	public static Texture gui;
 	
 	public void render() {
-		GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.f);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		gui.bind();
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glTexCoord2f(0, 0);
-		GL11.glVertex2f(x, y);
-		GL11.glTexCoord2f(gui.getWidth(), 0);
-		GL11.glVertex2f(x+432, y);
-		GL11.glTexCoord2f(gui.getWidth(), gui.getHeight());
-		GL11.glVertex2f(x+432, y+432);
-		GL11.glTexCoord2f(0, gui.getHeight());
-		GL11.glVertex2f(x, y+432);
-		GL11.glEnd();
-
-		FontRenderer.kor_white.bind();
-		FontRenderer.renderReSizeable(x, y, 8, "스킬 제작 창", 1.0f);
+		Render.RenderImageBoxColor(x, y, x+432, y+432, gui, Color.white);
+		
+		FontRenderer.renderReSizeable(x, y, 8, "스킬 제작 창", 1.f, 1);
 		
 		GL11.glDisable(GL11.GL_BLEND);
 	}

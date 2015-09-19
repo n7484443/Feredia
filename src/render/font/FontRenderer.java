@@ -6,11 +6,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
+
+import render.Render;
 
 public class FontRenderer {
 	public static Texture kor_white;
@@ -51,7 +54,7 @@ public class FontRenderer {
 		br.close();
 	}
 	
-	public synchronized static void render(int x1, int y1, String str){
+	public synchronized static void render(int x1, int y1, String str, int whiteorblack){
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		Color.white.bind();
@@ -84,17 +87,7 @@ public class FontRenderer {
 			float texx2 = (fontx+fontwidth)/2048F;
 			float texy1 = fonty/2048F;
 			float texy2 = (fonty+koreanheight)/2048F;
-			GL11.glColor4f(1.0f,1.0f,1.0f,0.5f); 
-			GL11.glBegin(GL11.GL_QUADS);
-				GL11.glTexCoord2d(texx1, texy1);
-				GL11.glVertex2f(x1, y1);
-				GL11.glTexCoord2d(texx1, texy2);
-				GL11.glVertex2f(x1, y1+koreanheight);
-				GL11.glTexCoord2d(texx2, texy2);
-	 			GL11.glVertex2f(x1+fontwidth, y1+koreanheight);
-	 			GL11.glTexCoord2d(texx2, texy1);
-	 			GL11.glVertex2f(x1+fontwidth, y1);
-			GL11.glEnd();
+			Render.RenderImageBoxXYColor(x1, y1, x1+fontwidth, y1+koreanheight, whiteorblack == 0 ? kor_white : kor_black, texx1, texy1, texx2, texy2, new Color(1.f, 1.f, 1.f, 0.5f));
 			x1 += fontwidth;
 			if(b){
 				b= false;
@@ -103,7 +96,7 @@ public class FontRenderer {
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 	
-	public synchronized static void renderReSizeable(int x1, int y1, int size, String str, float Alpha){
+	public synchronized static void renderReSizeable(int x1, int y1, int size, String str, float Alpha, int whiteorblack){
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		float m = (float)size / 20;
@@ -116,17 +109,7 @@ public class FontRenderer {
 			float texy1 = fonty/2048F;
 			float texy2 = (fonty+koreanheight)/2048F;
 			int he = (int) (koreanheight*m);
-			GL11.glColor4f(1.0f,1.0f,1.0f,Alpha); 
-			GL11.glBegin(GL11.GL_QUADS);
-				GL11.glTexCoord2d(texx1, texy1);
-				GL11.glVertex2f(x1, y1);
-				GL11.glTexCoord2d(texx1, texy2);
-				GL11.glVertex2f(x1, y1+he);
-				GL11.glTexCoord2d(texx2, texy2);
-	 			GL11.glVertex2f(x1+fontwidth*m, y1+he);
-	 			GL11.glTexCoord2d(texx2, texy1);
-	 			GL11.glVertex2f(x1+fontwidth*m, y1);
-			GL11.glEnd();
+			Render.RenderImageBoxXYColor(x1, y1, (int)(x1+fontwidth*m), (int)(y1+he), whiteorblack == 0 ? kor_white : kor_black, texx1, texy1, texx2, texy2, new Color(1.f,1.f,1.f,Alpha));
 			x1 += fontwidth*m;
 		}
 		GL11.glDisable(GL11.GL_BLEND);

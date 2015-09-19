@@ -5,17 +5,18 @@ import render.RenderDataBase;
 
 public class CircuitMain extends Thread {
 	@Override
-	public synchronized void start() {
+	public void start() {
 		init();
 	}
 
 	private synchronized void init() {
+		setName("RenderFeredia");
 		RenderDataBase.Init();
 		MainRoop.p.quest.Init();
 		MainRoop.p.itemSlot.Init();
 	}
 
-	public synchronized void update() {
+	public void Update() {
 		jumpPlayer();
 		SkillUpdate();
 

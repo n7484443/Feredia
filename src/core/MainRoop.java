@@ -1,7 +1,5 @@
 package core;
 
-import java.io.IOException;
-
 import image.loader.MainImageLoader;
 import item.Items;
 import item.ItemSlot;
@@ -21,7 +19,7 @@ import skill.mage.Skills_Mage;
 
 public class MainRoop {
 	
-	public final static boolean Debug = true;
+	public final static boolean Debug = false;
 	
 	public static enum Gui {none, ItemSlot, SkillSlot, QuestSlot, MiniMap, SkillMageMakingMagicSlot}
 	
@@ -97,12 +95,8 @@ public class MainRoop {
 		} else {
 			long before = System.currentTimeMillis();
 			Check();
-			CM.update();
-			try {
-				RM.update();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			CM.Update();
+			RM.Update();
 			long after = System.currentTimeMillis();
 			if ((35 - (after - before)) > 0) {
 				try {
